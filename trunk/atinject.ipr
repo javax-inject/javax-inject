@@ -73,7 +73,7 @@
     <option name="OPTION_DOCUMENT_TAG_VERSION" value="false" />
     <option name="OPTION_DOCUMENT_TAG_DEPRECATED" value="true" />
     <option name="OPTION_DEPRECATED_LIST" value="true" />
-    <option name="OTHER_OPTIONS" />
+    <option name="OTHER_OPTIONS" value="-header &quot;&lt;font color='red'&gt;&lt;b&gt;This is a DRAFT specification.&lt;/b&gt;&lt;/font&gt;&quot;" />
     <option name="HEAP_SIZE" />
     <option name="LOCALE" />
     <option name="OPEN_IN_BROWSER" value="true" />
@@ -211,6 +211,9 @@
     <option name="projectName" value="atinject" />
   </component>
   <component name="ProjectFileVersion" converted="true" />
+  <component name="ProjectKey">
+    <option name="state" value="project:///Users/crazybob/projects/atinject/atinject.ipr" />
+  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/atinject.iml" filepath="$PROJECT_DIR$/atinject.iml" />
