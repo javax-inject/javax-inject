@@ -1,4 +1,4 @@
-package org.atinject;
+package javax.inject;
 
 import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
@@ -42,15 +42,15 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
  * <p>For example:
  *
  * <pre>
- *   &#064;org.atinject.Qualifier
  *   &#064;java.lang.annotation.Documented
  *   &#064;java.lang.annotation.Retention(RUNTIME)
+ *   &#064;javax.inject.Qualifier
  *   public @interface Leather {
  *     Color color() default Color.TAN;
  *     public enum Color { RED, BLACK, TAN }
  *   }</pre>
  *
- * @see org.atinject.Named @Named
+ * @see javax.inject.Named @Named
  */
 @Target(ANNOTATION_TYPE)
 @Retention(RUNTIME)

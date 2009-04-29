@@ -1,4 +1,4 @@
-package org.atinject;
+package javax.inject;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -7,7 +7,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * Identifies a type that the injector only instantiates once. Not inherited.
  *
- * @see org.atinject.Scope @Scope
+ * @see javax.inject.Scope @Scope
  */
 @Scope
 @Documented

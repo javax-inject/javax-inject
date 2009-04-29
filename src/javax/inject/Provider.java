@@ -1,4 +1,4 @@
-package org.atinject;
+package javax.inject;
 
 /**
  * Provides instances of {@code T}. For any type {@code T} that can be

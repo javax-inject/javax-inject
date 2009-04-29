@@ -1,4 +1,4 @@
-package org.atinject;
+package javax.inject;
 
 import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
@@ -120,8 +120,8 @@ import static java.lang.annotation.ElementType.FIELD;
  * one of the dependencies (using {@linkplain Singleton singleton scope}, for
  * example) may also enable a valid circular relationship.
  *
- * @see org.atinject.Qualifier @Qualifier
- * @see org.atinject.Provider
+ * @see javax.inject.Qualifier @Qualifier
+ * @see javax.inject.Provider
  */
 @Target({ METHOD, CONSTRUCTOR, FIELD })
 @Retention(RUNTIME)

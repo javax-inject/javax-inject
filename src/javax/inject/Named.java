@@ -1,4 +1,4 @@
-package org.atinject;
+package javax.inject;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Documented;
