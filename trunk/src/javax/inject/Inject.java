@@ -9,7 +9,7 @@ import static java.lang.annotation.ElementType.CONSTRUCTOR;
 import static java.lang.annotation.ElementType.FIELD;
 
 /**
- * Identifies injectable constructors, methods, and fields. Applies to static
+ * Identifies injectable constructors, methods, and fields. May apply to static
  * as well as instance members. An injectable member may have any access
  * modifier (private, package-private, protected, public). Constructors are
  * injected first, followed by fields, and then methods. Fields and methods
@@ -56,16 +56,20 @@ import static java.lang.annotation.ElementType.FIELD;
  *   <li>are annotated with {@code @Inject}.</li>
  *   <li>are not abstract.</li>
  *   <li>do not declare type parameters of their own.</li>
- *   <li>return {@code void}.</li>
+ *   <li>may return a result</li>
  *   <li>may have any otherwise valid name.</li>
  *   <li>accept zero or more dependencies as arguments.</li></ul>
  *
  * <p><tt><blockquote style="padding-left: 2em; text-indent: -2em;">@Inject
  *       <i>MethodModifiers<sub>opt</sub></i>
- *       void
+ *       <i>ResultType</i>
  *       <i>Identifier</i>(<i>FormalParameterList<sub>opt</sub></i>)
  *       <i>Throws<sub>opt</sub></i>
  *       <i>MethodBody</i></blockquote></tt>
+ *
+ * <p>The injector ignores the result of an injected method, but
+ * non-{@code void} return types are allowed to support use of the method in
+ * other contexts (builder-style method chaining, for example).
  *
  * <p>For example:
  *
@@ -87,11 +91,31 @@ import static java.lang.annotation.ElementType.FIELD;
  * that overrides a method annotated with {@code @Inject} will not be
  * injected.
  *
- * <p>Injection of members annotated with {@code @Inject} is required by
- * default. This behavior can be overridden by setting {@link #optional()
- * optional} equal to {@code true}.
+ * <p>Injection of members annotated with {@code @Inject} is required.
  *
- * <p>Detecting and resolving circular dependencies is left as an exercize for
+ * <h3>Qualifiers</h3>
+ *
+ * <p>A {@linkplain Qualifier qualifier} may annotate an injectable field
+ * or parameter and, combined with the type, identify the implementation to
+ * inject. Qualifiers are optional and when used with {@code @Inject}, no more
+ * than one qualifier should annotate a single field or parameter. The
+ * qualifiers are bold in the following example:
+ *
+ * <pre>
+ *   public class Car {
+ *     &#064;Inject private <b>@Leather</b> Provider&lt;Seat> seatProvider;
+ *
+ *     &#064;Inject void install(<b>@Tinted</b> Windshield windshield,
+ *         <b>@Big</b> Trunk trunk) { ... }
+ *   }</pre>
+ *
+ * <p>If one injectable method overrides another, the overriding method's
+ * parameters do not automatically inherit qualifiers from the overridden
+ * method's parameters.
+ *
+ * <h3>Circular Dependencies</h3>
+ *
+ * <p>Detecting and resolving circular dependencies is left as an exercise for
  * the injector implementation. Circular dependencies between two constructors
  * is an obvious problem, but you can also have a circular dependency between
  * injectable fields or methods:
@@ -126,32 +150,4 @@ import static java.lang.annotation.ElementType.FIELD;
 @Target({ METHOD, CONSTRUCTOR, FIELD })
 @Retention(RUNTIME)
 @Documented
-public @interface Inject {
-
-    /**
-     * Whether or not injection is optional. If {@code true}, the injector's
-     * behavior varies depending on the type of injection point:
-     *
-     * <p><ul>
-     *   <li><b>Constructors:</b> <i>Not allowed</i></li>
-     *   <li><b>Fields:</b> If a dependency matching the field can't
-     *     be found, the injector will not set the field.</li>
-     *   <li><b>Methods:</b> If a dependency matching a method parameter can't
-     *     be found, the injector will skip invoking the method entirely, even
-     *     if other arguments could be provided.</li>
-     * </ul>
-     * 
-     * <p>If an applicable dependency has been configured but the injector
-     * encounters an error while resolving the dependency (a transitive
-     * dependency could be missing, for example), the injector should generate
-     * an error, not skip the injection. For example:
-     *
-     * <pre>
-     *   &#064;Inject(optional=true) Gps gps;</pre>
-     *
-     * <p>If a Gps isn't available at all, the injector will simply not set the
-     * {@code gps} field. If a Gps is available but an algorithm it depends
-     * upon can't be found, the injector will generate an error.
-     */
-    boolean optional() default false;
-}
+public @interface Inject {}
