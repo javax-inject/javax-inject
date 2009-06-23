@@ -7,25 +7,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 
 /**
- * Identifies qualifier annotations. A qualifier annotates an injectable field
- * or parameter and, combined with the type, identifies the implementation to
- * inject. Qualifiers are optional and no more than one should annotate a
- * single field or parameter. The qualifiers are bold in the following
- * example:
+ * Identifies qualifier annotations. Anyone can define a new qualifier. A
+ * qualifier annotation:
  *
- * <pre>
- *   public class Car {
- *     &#064;Inject private <b>@Leather</b> Provider&lt;Seat> seatProvider;
- *
- *     &#064;Inject void install(<b>@Tinted</b> Windshield windshield,
- *         <b>@Big</b> Trunk trunk) { ... }
- *   }</pre>
- *
- * <p>If one injectable method overrides another, the overriding method's
- * parameters do not automatically inherit qualifiers from the overridden
- * method's parameters.
- *
- * <p>Anyone can define a new qualifier. A qualifier annotation:
  * <ul>
  *   <li>is annotated with {@code @Qualifier}, {@code @Retention(RUNTIME)},
  *      and typically {@code @Documented}.</li>
