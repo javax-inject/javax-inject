@@ -13,5 +13,5 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface Named {
 
     /** The name. */
-    String value();
+    String value() default "";
 }
