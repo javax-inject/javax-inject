@@ -97,9 +97,9 @@ import static java.lang.annotation.ElementType.FIELD;
  *
  * <p>A {@linkplain Qualifier qualifier} may annotate an injectable field
  * or parameter and, combined with the type, identify the implementation to
- * inject. Qualifiers are optional and when used with {@code @Inject}, no more
- * than one qualifier should annotate a single field or parameter. The
- * qualifiers are bold in the following example:
+ * inject. Qualifiers are optional, and when used with {@code @Inject} in 
+ * injector-independent classes, no more than one qualifier should annotate a
+ * single field or parameter. The qualifiers are bold in the following example:
  *
  * <pre>
  *   public class Car {
