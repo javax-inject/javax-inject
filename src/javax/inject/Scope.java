@@ -36,10 +36,10 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
  *   <li>should not have attributes.</li>
  *   <li>is typically not {@code @Inherited}, so scoping is orthogonal to
  *      implementation inheritance.</li>
- *   <li>is <i>not</i> annotated with {@code @Target}. While this
- *      specification only covers applying scopes to classes, some injector
- *      configurations might use scopes in other places (on factory
- *      method results for example).</li>
+ *   <li>may have restricted usage if annotated with {@code @Target}. While
+ *      this specification only covers applying scopes to classes, some 
+ *      injector configurations might use scope annotations
+ *      in other places (on factory method results for example).</li>
  * </ul>
  *
  * <p>For example:

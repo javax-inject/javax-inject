@@ -14,13 +14,13 @@ import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
  *   <li>is annotated with {@code @Qualifier}, {@code @Retention(RUNTIME)},
  *      and typically {@code @Documented}.</li>
  *   <li>can have attributes.</li>
- *   <li>is <i>not</i> annotated with {@code @Target}. While this
- *      specification only covers applying qualifiers to fields and parameters,
- *      some injector configurations might use qualifier annotations in other
- *      places (on methods or classes for example).</li>
  *   <li>may be part of the public API, much like the dependency type, but
  *      unlike implementation types which needn't be part of the public
  *      API.</li>
+ *   <li>may have restricted usage if annotated with {@code @Target}. While
+ *      this specification only covers applying qualifiers to fields and
+ *      parameters, some injector configurations might use qualifier
+ *      annotations in other places (on methods or classes for example).</li>
  * </ul>
  *
  * <p>For example:
