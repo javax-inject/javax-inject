@@ -110,7 +110,7 @@ import static java.lang.annotation.ElementType.FIELD;
  * <p>Injection of members annotated with {@code @Inject} is required. While an
  * injectable member may use any accessibility modifier (including
  * <tt>private</tt>), platform or injector limitations (like security
- * restrictions or lack of reflection support) might prevent injection
+ * restrictions or lack of reflection support) might preclude injection
  * of non-public members.
  *
  * <h3>Qualifiers</h3>
