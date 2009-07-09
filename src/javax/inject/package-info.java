@@ -137,7 +137,7 @@
  * and fields to advertise their injectability (constructor injection is
  * demonstrated in the examples above). A dependency injector identifies a
  * class's dependencies by inspecting these annotations, and injects the
- * dependencies at runtime. Moreover, the injector can verify that all
+ * dependencies at run time. Moreover, the injector can verify that all
  * dependencies have been satisfied at <i>build time</i>. A service locator,
  * by contrast, cannot detect unsatisfied dependencies until run time.
  *
