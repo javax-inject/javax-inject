@@ -131,17 +131,15 @@
  * <p>The total decrease in unit-test complexity is proportional to the
  * product of the number of unit tests and the number of dependencies.
  *
- * <p>Programmers annotate constructors, methods, and fields to advertise
- * their injectability (constructor injection is demonstrated in the examples
- * above). A dependency injector identifies a class's dependencies by
- * inspecting these annotations, and injects the dependencies at runtime.
- * Moreover, the injector can verify that all dependencies have been satisfied
- * at <i>build time</i>. A service locator, by contrast, cannot detect
- * unsatisfied dependencies until run time.
- *
- * <p>This package provides dependency injection annotations that enable
- * portable classes, but it leaves external dependency configuration up to the
- * injector implementation.
+ * <p><b>This package provides dependency injection annotations that enable
+ * portable classes</b>, but it leaves external dependency configuration up to
+ * the injector implementation. Programmers annotate constructors, methods,
+ * and fields to advertise their injectability (constructor injection is
+ * demonstrated in the examples above). A dependency injector identifies a
+ * class's dependencies by inspecting these annotations, and injects the
+ * dependencies at runtime. Moreover, the injector can verify that all
+ * dependencies have been satisfied at <i>build time</i>. A service locator,
+ * by contrast, cannot detect unsatisfied dependencies until run time.
  *
  * <p>Injector implementations can take many forms. An injector could
  * configure itself using XML, annotations, a DSL (domain-specific language),
