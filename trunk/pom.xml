@@ -27,6 +27,12 @@
 	            <groupId>org.apache.maven.plugins</groupId>
 	            <artifactId>maven-javadoc-plugin</artifactId>
 	            <version>2.5</version>
+	            <configuration>
+	                <bottom><![CDATA[<font size='-1'>Copyright (C) 2009 <a href='http://code.google.com/p/atinject/'>\
+					The JSR-330 Expert Group</a>. \
+					Licensed under the <a href='http://www.apache.org/licenses/LICENSE-2.0'>Apache \
+					License</a>, Version 2.0.</font>]]></bottom>
+                </configuration>
 	        </plugin>
 	    </plugins>
 	</reporting>
