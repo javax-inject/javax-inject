@@ -1,11 +1,11 @@
-/**
- * Copyright (C) 2009 Google Inc.
+/*
+ * Copyright (C) 2009 The JSR-330 Expert Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 
 package com.googlecode.atinject;
 
@@ -25,8 +24,7 @@ public class Tester {
     private final List<String> problems = new ArrayList<String>();
 
     /**
-     * @param problem a description of what went wrong; often of the form,
-     *      "Expected two injections to yield the same instance of Vin".
+     * @param problem a brief description of what went wrong.
      */
     public void addProblem(String problem) {
         problems.add(problem);
@@ -35,8 +33,7 @@ public class Tester {
     /**
      * Adds a problem if {@code condition} is not true.
      * 
-     * @param problem a description of what went wrong; often of the form,
-     *      "Expected two injections to yield the same instance of Vin".
+     * @param problem a brief description of what went wrong.
      */
     public void test(boolean condition, String problem) {
         if (!condition) {

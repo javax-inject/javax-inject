@@ -1,11 +1,11 @@
-/**
- * Copyright (C) 2009 Google Inc.
+/*
+ * Copyright (C) 2009 The JSR-330 Expert Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,32 +14,39 @@
  * limitations under the License.
  */
 
-
 package com.googlecode.atinject.auto.accessories;
 
 import com.googlecode.atinject.Tester;
+import com.googlecode.atinject.auto.FuelTank;
 import com.googlecode.atinject.auto.Tire;
-import com.googlecode.atinject.auto.V8Engine;
 
 import javax.inject.Inject;
 
 public class SpareTire extends Tire {
 
-    V8Engine constructorInjection = NEVER_INJECTED;
-    @Inject V8Engine fieldInjection = NEVER_INJECTED;
-    V8Engine methodInjection = NEVER_INJECTED;
+    FuelTank constructorInjection = NEVER_INJECTED;
+    @Inject FuelTank fieldInjection = NEVER_INJECTED;
+    FuelTank methodInjection = NEVER_INJECTED;
+    @Inject static FuelTank staticFieldInjection = NEVER_INJECTED;
+    static FuelTank staticMethodInjection = NEVER_INJECTED;
 
-
-    @Inject public SpareTire(V8Engine forSupertype, V8Engine forSubtype) {
+    @Inject public SpareTire(FuelTank forSupertype, FuelTank forSubtype) {
         super(forSupertype);
         this.constructorInjection = forSubtype;
     }
 
-    @Inject void subtypeMethodInjection(V8Engine methodInjection) {
+    @Inject void subtypeMethodInjection(FuelTank methodInjection) {
         if (!hasSpareTireBeenFieldInjected()) {
             moreProblems.add("Methods injected before fields");
         }
         this.methodInjection = methodInjection;
+    }
+
+    @Inject static void subtypeStaticMethodInjection(FuelTank methodInjection) {
+        if (!hasBeenStaticFieldInjected()) {
+            moreProblems.add("Static methods injected before static fields");
+        }
+        staticMethodInjection = methodInjection;
     }
 
     @Inject private void injectPrivateMethod() {
@@ -94,6 +101,14 @@ public class SpareTire extends Tire {
         return methodInjection != NEVER_INJECTED;
     }
 
+    public static boolean hasBeenStaticFieldInjected() {
+        return staticFieldInjection != NEVER_INJECTED;
+    }
+
+    public static boolean hasBeenStaticMethodInjected() {
+        return staticMethodInjection != NEVER_INJECTED;
+    }
+
     /**
      * This class is used to check inheritance. By existing in a separate package
      * from Tire, it can make sure the injector does the right thing with overrides
@@ -106,6 +121,10 @@ public class SpareTire extends Tire {
         tester.test(hasSpareTireBeenMethodInjected(), "Subtype methods not injected");
         tester.test(hasTireBeenFieldInjected(), "Supertype fields not injected");
         tester.test(hasTireBeenMethodInjected(), "Supertype methods not injected");
+        tester.test(SpareTire.hasBeenStaticFieldInjected(), "Subtype static fields not injected");
+        tester.test(SpareTire.hasBeenStaticMethodInjected(), "Subtype static methods not injected");
+        tester.test(Tire.hasBeenStaticFieldInjected(), "Supertype static fields not injected");
+        tester.test(Tire.hasBeenStaticMethodInjected(), "Supertype static methods not injected");
 
         tester.test(superPrivateMethodInjected, "Supertype private method not injected");
         tester.test(superPackagePrivateMethodInjected, "Supertype private method not injected");

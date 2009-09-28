@@ -1,11 +1,11 @@
-/**
- * Copyright (C) 2009 Google Inc.
+/*
+ * Copyright (C) 2009 The JSR-330 Expert Group
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-
 package com.googlecode.atinject.auto;
 
+import com.googlecode.atinject.auto.accessories.SpareTire;
+
 import javax.inject.Inject;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Tire {
 
-    protected static final V8Engine NEVER_INJECTED = new V8Engine();
+    protected static final FuelTank NEVER_INJECTED = new FuelTank();
 
-    protected final List<String> moreProblems = new ArrayList<String>();
+    protected static final Set<String> moreProblems = new LinkedHashSet<String>();
 
-    V8Engine constructorInjection = NEVER_INJECTED;
-    @Inject V8Engine fieldInjection = NEVER_INJECTED;
-    V8Engine methodInjection = NEVER_INJECTED;
+    FuelTank constructorInjection = NEVER_INJECTED;
+    @Inject FuelTank fieldInjection = NEVER_INJECTED;
+    FuelTank methodInjection = NEVER_INJECTED;
+    @Inject static FuelTank staticFieldInjection = NEVER_INJECTED;
+    static FuelTank staticMethodInjection = NEVER_INJECTED;
 
     boolean constructorInjected;
 
@@ -49,12 +52,11 @@ public class Tire {
     protected boolean protectedMethodForOverrideInjected;
     protected boolean publicMethodForOverrideInjected;
 
-    @Inject
-    public Tire(V8Engine constructorInjection) {
+    @Inject public Tire(FuelTank constructorInjection) {
         this.constructorInjection = constructorInjection;
     }
 
-    @Inject void supertypeMethodInjection(V8Engine methodInjection) {
+    @Inject void supertypeMethodInjection(FuelTank methodInjection) {
         if (!hasTireBeenFieldInjected()) {
             moreProblems.add("Method injected before fields");
         }
@@ -65,6 +67,19 @@ public class Tire {
             moreProblems.add("Subtype method injected before supertype method");
         }
         this.methodInjection = methodInjection;
+    }
+
+    @Inject static void supertypeStaticMethodInjection(FuelTank methodInjection) {
+        if (!Tire.hasBeenStaticFieldInjected()) {
+            moreProblems.add("Static method injected before static fields");
+        }
+        if (SpareTire.hasBeenStaticFieldInjected()) {
+            moreProblems.add("Subtype static field injected before supertype static method");
+        }
+        if (SpareTire.hasBeenStaticMethodInjected()) {
+            moreProblems.add("Subtype static method injected before supertype static method");
+        }
+        staticMethodInjection = methodInjection;
     }
 
     @Inject private void injectPrivateMethod() {
@@ -121,6 +136,14 @@ public class Tire {
 
     protected final boolean hasTireBeenMethodInjected() {
         return methodInjection != NEVER_INJECTED;
+    }
+
+    protected static boolean hasBeenStaticFieldInjected() {
+        return staticFieldInjection != NEVER_INJECTED;
+    }
+
+    protected static boolean hasBeenStaticMethodInjected() {
+        return staticMethodInjection != NEVER_INJECTED;
     }
 
     protected boolean hasSpareTireBeenMethodInjected() {
