@@ -8,6 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="atinject" />
+    <orderEntry type="library" name="Guice" level="project" />
   </component>
 </module>
 

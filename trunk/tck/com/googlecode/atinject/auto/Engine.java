@@ -17,6 +17,22 @@
 
 package com.googlecode.atinject.auto;
 
+import javax.inject.Inject;
+import java.util.List;
+import java.util.ArrayList;
+
 public abstract class Engine {
     
+    protected final List<String> moreProblems = new ArrayList<String>();
+
+    protected boolean packagePrivateMethodInjected;
+    protected boolean packagePrivateMethodForOverrideInjected;
+
+    @Inject void injectPackagePrivateMethod() {
+        moreProblems.add("Unexpected call to supertype package private method");
+    }
+
+    @Inject void injectPackagePrivateMethodForOverride() {
+        moreProblems.add("Unexpected call to supertype package private method");
+    }
 }

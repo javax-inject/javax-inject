@@ -255,5 +255,17 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
   </component>
+  <component name="libraryTable">
+    <library name="Guice">
+      <CLASSES>
+        <root url="jar:///Users/jessewilson/Guice/google-guice/lib/aopalliance.jar!/" />
+        <root url="jar:///Users/jessewilson/Guice/google-guice/build/dist/guice-snapshot.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file:///Users/jessewilson/Guice/google-guice/src" />
+      </SOURCES>
+    </library>
+  </component>
 </project>
 

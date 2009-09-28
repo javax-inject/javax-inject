@@ -40,7 +40,7 @@ public class Tck {
         }
 
         if (car == null) {
-            tester.addProblem("Expected non-null result from Candidate.getCar()");
+            tester.addProblem("Null returned from Candidate.getCar()");
         } else {
             car.check(tester);
         }
