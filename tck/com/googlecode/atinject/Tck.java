@@ -22,6 +22,7 @@ import com.googlecode.atinject.auto.Convertible;
 import junit.framework.Test;
 import junit.framework.TestResult;
 import junit.framework.TestSuite;
+import junit.framework.TestCase;
 
 /**
  * Extend this class, implement {@link #getCar()}, and declare a static
@@ -66,7 +67,7 @@ public abstract class Tck implements Test {
         if (!(car instanceof Convertible)) {
             delegate = new Failure(
                     "getCar() did not return an instance of Convertible",
-                    new ClassCastException("Expected: Convertible, got: "
+                    new ClassCastException("Expected Convertible, got "
                             + car.getClass().getName()));
             return;
         }
@@ -107,23 +108,24 @@ public abstract class Tck implements Test {
      */
     protected abstract Car getCar();
 
-    static class Failure implements Test {
-        final String message;
+    static class Failure extends TestCase {
+        /*
+         * We have to extend TestCase instead of implementing Test so we
+         * can set the name.
+         */
+
         final Throwable t;
-        Failure(String message, Throwable t) {
-            this.message = message;
+        Failure(String name, Throwable t) {
+            setName(name);
             this.t = t;
         }
-        public int countTestCases() {
+        @Override public int countTestCases() {
             return 1;
         }
-        public void run(TestResult result) {
+        @Override public void run(TestResult result) {
             result.startTest(this);
             result.addError(this, t);
             result.endTest(this);
-        }
-        @Override public String toString() {
-            return message;
         }
     }
 }
