@@ -20,6 +20,8 @@ import com.googlecode.atinject.Tester;
 import com.googlecode.atinject.auto.accessories.SpareTire;
 import com.googlecode.atinject.auto.accessories.Cupholder;
 
+import junit.framework.TestCase;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -257,5 +259,19 @@ public class Convertible implements Car {
             tester.test(provider.get() != provider.get(),
                     "Same instance returned by repeated calls to Provider.get()");
         }
+    }
+
+    /**
+     * Tests against the Convertible instance.
+     *
+     * @see #car
+     */
+    public static class Test extends TestCase {
+
+        /**
+         * The instance to test. Making it static isn't ideal, but it saves
+         * us from having to repeat a boatload of JUnit code.
+         */
+        public static Convertible car;
     }
 }
