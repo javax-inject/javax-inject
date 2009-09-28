@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject.auto;
+package org.atinject.tck.auto;
 
-import com.googlecode.atinject.Tester;
+import javax.inject.Inject;
 
-public interface Car {
+public abstract class GasEngine extends Engine {
 
-    /**
-     * Validates that this object was injected correctly.
-     */
-    void check(Tester tester);
+    public void injectTwiceOverriddenWithOmissionInMiddle() {
+        overriddenTwiceWithOmissionInMiddleInjected = true;
+    }
+
+    @Inject public void injectTwiceOverriddenWithOmissionInSubclass() {
+        overriddenTwiceWithOmissionInSubclassInjected = true;
+    }
 }

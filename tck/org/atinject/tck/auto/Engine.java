@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject.auto;
+package org.atinject.tck.auto;
 
-import com.googlecode.atinject.auto.accessories.SpareTire;
-import com.googlecode.atinject.Tester;
+import org.atinject.tck.auto.accessories.SpareTire;
+import org.atinject.tck.Tester;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public abstract class Engine {
-    
+
     protected final List<String> moreProblems = new ArrayList<String>();
 
     protected boolean publicNoArgsConstructorInjected;
@@ -48,7 +48,7 @@ public abstract class Engine {
         moreProblems.add("Unexpected call to supertype package private method");
     }
 
-    @Inject public void injectQualifiers(@Drivers Seat seatA, Seat seatB, 
+    @Inject public void injectQualifiers(@Drivers Seat seatA, Seat seatB,
             @Named("spare") Tire tireA, Tire tireB) {
         if (!(seatA instanceof DriversSeat)
                 || (seatB instanceof DriversSeat)

@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject.auto;
+package org.atinject.tck.auto;
 
-import com.googlecode.atinject.auto.accessories.Cupholder;
+import org.atinject.tck.Tester;
 
-import javax.inject.Inject;
+public interface Car {
 
-public class DriversSeat extends Seat {
-
-    @Inject
-    public DriversSeat(Cupholder cupholder) {
-        super(cupholder);
-    }
+    /**
+     * Validates that this object was injected correctly.
+     */
+    void check(Tester tester);
 }

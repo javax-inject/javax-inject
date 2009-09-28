@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject;
+package org.atinject.tck;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class Tester {
 
     /**
      * Adds a problem if {@code condition} is not true.
-     * 
+     *
      * @param problem a brief description of what went wrong.
      */
     public void test(boolean condition, String problem) {

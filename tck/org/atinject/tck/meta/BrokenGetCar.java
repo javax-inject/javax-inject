@@ -1,12 +1,15 @@
-package com.googlecode.atinject.meta;
+package org.atinject.tck.meta;
 
-import com.googlecode.atinject.Tck;
-import com.googlecode.atinject.Tester;
-import com.googlecode.atinject.auto.Car;
+import org.atinject.tck.Tck;
+import org.atinject.tck.Tester;
+import org.atinject.tck.auto.Car;
 
 import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.framework.TestResult;
 
+/**
+ * We expect these tests to fail.
+ */
 public class BrokenGetCar {
 
     static class ThrowsException extends Tck {
@@ -32,10 +35,15 @@ public class BrokenGetCar {
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(new ThrowsException());
-        suite.addTest(new ReturnsNull());
-        suite.addTest(new WrongType());
-        return suite;
+        return new Test() {
+            public int countTestCases() {
+                return 3;
+            }
+            public void run(TestResult result) {
+                new ThrowsException().run(result);
+                new ReturnsNull().run(result);
+                new WrongType().run(result);
+            }
+        };
     }
 }
