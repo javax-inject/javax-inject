@@ -266,11 +266,10 @@ public class Convertible implements Car {
      */
     public static class Tests extends TestCase {
 
-        /**
-         * The instance to test. Making it static isn't ideal, but it saves
-         * us from having to repeat a boatload of JUnit code.
-         */
-        public static Convertible car;
+        public static ThreadLocal<Convertible> localConvertible
+                = new ThreadLocal<Convertible>();
+
+        private final Car car = localConvertible.get();
 
         public void testAll() {
             Tester tester = new Tester();

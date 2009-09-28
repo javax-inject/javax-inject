@@ -38,8 +38,6 @@ import junit.framework.TestSuite;
  * <pre>
  * java junit.textui.TestRunner MyTck
  * </pre>
- *
- * @deprecated
  */
 public class Tck {
 
@@ -67,9 +65,6 @@ public class Tck {
      * Convertible}, {@link org.atinject.tck.auto.Tire Tire}, and {@link
      * org.atinject.tck.auto.accessories.SpareTire SpareTire}.
      *
-     * <p><b>Note:</b> Due to limitations of JUnit, you must create and run
-     * only one test instance at a time.
-     *
      * @throws NullPointerException if car is null
      * @throws ClassCastException if car doesn't extend Convertible
      */
@@ -82,7 +77,11 @@ public class Tck {
             throw new ClassCastException("car doesn't implement Convertible");
         }
 
-        Convertible.Tests.car = (Convertible) car;
-        return new TestSuite(Convertible.Tests.class);
+        Convertible.Tests.localConvertible.set((Convertible) car);
+        try {
+            return new TestSuite(Convertible.Tests.class);
+        } finally {
+            Convertible.Tests.localConvertible.remove();
+        }
     }
 }
