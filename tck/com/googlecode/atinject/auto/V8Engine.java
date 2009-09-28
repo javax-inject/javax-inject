@@ -17,5 +17,28 @@
 
 package com.googlecode.atinject.auto;
 
+import com.googlecode.atinject.Tester;
+
+import javax.inject.Inject;
+
 public class V8Engine extends Engine {
+
+    @Inject void injectPackagePrivateMethod() {
+        if (packagePrivateMethodInjected) {
+            moreProblems.add("Overridden package private method injected twice");
+        }
+        packagePrivateMethodInjected = true;
+    }
+
+    void injectPackagePrivateMethodForOverride() {
+        packagePrivateMethodForOverrideInjected = true;
+    }
+
+    public void check(Tester tester) {
+        tester.addProblems(moreProblems);
+
+        tester.test(packagePrivateMethodInjected, "Packge private method not injected");
+        tester.test(!packagePrivateMethodForOverrideInjected,
+                "Package private method injected, even though its override lacks @Inject");
+    }
 }
