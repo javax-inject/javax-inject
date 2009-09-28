@@ -8,7 +8,7 @@ mkdir -p build/dist
 
 # Compile classes.
 javac -g -d build/classes `find src -name *.java`
-javac -g -classpath build/classes -d build/tck \
+javac -g -classpath build/classes:lib/junit.jar -d build/tck \
 	`find tck -name *.java`
 
 FOOTER="<font size='-1'>Copyright (C) 2009 <a href='http://code.google.com/p/atinject/'>\
