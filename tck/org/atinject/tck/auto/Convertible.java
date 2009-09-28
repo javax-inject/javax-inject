@@ -263,10 +263,8 @@ public class Convertible implements Car {
 
     /**
      * Tests against the Convertible instance.
-     *
-     * @see #car
      */
-    public static class Test extends TestCase {
+    public static class Tests extends TestCase {
 
         /**
          * The instance to test. Making it static isn't ideal, but it saves
