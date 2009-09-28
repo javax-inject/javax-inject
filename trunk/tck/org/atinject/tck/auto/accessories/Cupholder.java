@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject.auto.accessories;
+package org.atinject.tck.auto.accessories;
 
-import com.googlecode.atinject.auto.Seat;
-import com.googlecode.atinject.Tester;
+import org.atinject.tck.auto.Seat;
+import org.atinject.tck.Tester;
 
 import javax.inject.Singleton;
 import javax.inject.Provider;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 @Singleton
 public class Cupholder {
-    
+
     protected final List<String> moreProblems = new ArrayList<String>();
 
     private final Provider<Seat> seatProvider;

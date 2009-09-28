@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject.auto;
+package org.atinject.tck.auto;
 
-import com.googlecode.atinject.auto.accessories.SpareTire;
+import org.atinject.tck.auto.accessories.SpareTire;
 
 import javax.inject.Inject;
 import java.util.LinkedHashSet;

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject.auto;
+package org.atinject.tck.auto;
 
-import com.googlecode.atinject.Tester;
-import com.googlecode.atinject.auto.accessories.SpareTire;
-import com.googlecode.atinject.auto.accessories.Cupholder;
+import org.atinject.tck.Tester;
+import org.atinject.tck.auto.accessories.SpareTire;
+import org.atinject.tck.auto.accessories.Cupholder;
 
 import junit.framework.TestCase;
 
@@ -273,5 +273,12 @@ public class Convertible implements Car {
          * us from having to repeat a boatload of JUnit code.
          */
         public static Convertible car;
+
+        public void testAll() {
+            Tester tester = new Tester();
+            car.check(tester);
+            assertFalse(tester.problems().toString(),
+                    tester.problems().iterator().hasNext());
+        }
     }
 }

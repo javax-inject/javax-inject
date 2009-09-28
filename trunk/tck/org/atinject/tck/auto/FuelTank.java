@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject.auto;
+package org.atinject.tck.auto;
 
-public class Seatbelt {
+public class FuelTank {
+
 }

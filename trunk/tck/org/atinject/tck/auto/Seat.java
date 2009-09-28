@@ -14,8 +14,24 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject.auto;
+package org.atinject.tck.auto;
 
-public class FuelTank {
+import org.atinject.tck.auto.accessories.Cupholder;
 
+import javax.inject.Singleton;
+import javax.inject.Inject;
+
+@Singleton
+public class Seat {
+
+    private final Cupholder cupholder;
+
+    @Inject
+    Seat(Cupholder cupholder) {
+        this.cupholder = cupholder;
+    }
+
+    public Cupholder getCupholder() {
+        return cupholder;
+    }
 }

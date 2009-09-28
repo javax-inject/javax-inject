@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject.auto.accessories;
+package org.atinject.tck.auto.accessories;
 
-import com.googlecode.atinject.Tester;
-import com.googlecode.atinject.auto.FuelTank;
-import com.googlecode.atinject.auto.Tire;
+import org.atinject.tck.Tester;
+import org.atinject.tck.auto.FuelTank;
+import org.atinject.tck.auto.Tire;
 
 import javax.inject.Inject;
 

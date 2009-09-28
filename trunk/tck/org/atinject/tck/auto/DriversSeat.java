@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package com.googlecode.atinject.auto;
+package org.atinject.tck.auto;
+
+import org.atinject.tck.auto.accessories.Cupholder;
 
 import javax.inject.Inject;
 
-public abstract class GasEngine extends Engine {
+public class DriversSeat extends Seat {
 
-    public void injectTwiceOverriddenWithOmissionInMiddle() {
-        overriddenTwiceWithOmissionInMiddleInjected = true;
-    }
-
-    @Inject public void injectTwiceOverriddenWithOmissionInSubclass() {
-        overriddenTwiceWithOmissionInSubclassInjected = true;
+    @Inject
+    public DriversSeat(Cupholder cupholder) {
+        super(cupholder);
     }
 }
