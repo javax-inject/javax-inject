@@ -17,55 +17,113 @@
 package com.googlecode.atinject;
 
 import com.googlecode.atinject.auto.Car;
+import com.googlecode.atinject.auto.Convertible;
 
-public class Tck {
+import junit.framework.Test;
+import junit.framework.TestResult;
+import junit.framework.TestSuite;
 
-    private final Candidate candidate;
+/**
+ * Extend this class, implement {@link #getCar()}, and declare a static
+ * {@code suite} method (a JUnit convention):
+ *
+ * <pre>
+ * public class MyTck extends Tck {
+ *   protected Car getCar() {
+ *      return new MyInjector().getInstance(Car.class);
+ *   }
+ *   public static Test suite() {
+ *     return new MyTck();
+ *   }
+ * }
+ * </pre>
+ *
+ * <p>Then, run the tests using JUnit. For example:
+ *
+ * <pre>
+ * java junit.textui.TestRunner MyTck
+ * </pre>
+ */
+public abstract class Tck implements Test {
 
-    public Tck(Candidate candidate) {
-        this.candidate = candidate;
-    }
+    private final Test delegate;
 
-    private boolean testCompatibility() {
-        Tester tester = new Tester();
-
+    protected Tck() {
         Car car;
         try {
-            car = candidate.getCar();
-        } catch (Throwable e) {
-            System.out.println("FAIL!");
-            e.printStackTrace();
-            return false;
-        }
-
-        if (car == null) {
-            tester.addProblem("Null returned from Candidate.getCar()");
-        } else {
-            car.check(tester);
-        }
-
-        if (!tester.hasProblems()) {
-            System.out.println("SUCCESS!");
-            return true;
-        }
-
-        System.out.println("FAIL!");
-        for (String problem : tester.problems()) {
-            System.out.println(problem);
-        }
-        return false;
-    }
-
-    public static void main(String[] args)
-            throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        if (args.length != 1) {
-            System.out.println("Usage: Tck <candidate>");
+            car = getCar();
+        } catch (Throwable t) {
+            delegate = new Failure("getCar() threw an exception", t);
             return;
         }
 
-        Class<?> c = Class.forName(args[0]);
-        Candidate candidate = (Candidate) c.newInstance();
-        boolean success = new Tck(candidate).testCompatibility();
-        System.exit(success ? 0 : 1);
+        if (car == null) {
+            delegate = new Failure("getCar() returned null",
+                    new NullPointerException());
+            return;
+        }
+
+        if (!(car instanceof Convertible)) {
+            delegate = new Failure(
+                    "getCar() did not return an instance of Convertible",
+                    new ClassCastException("Expected: Convertible, got: "
+                            + car.getClass().getName()));
+            return;
+        }
+
+        Convertible.Test.car = (Convertible) car;
+        delegate = new TestSuite(Convertible.Test.class);
+    }
+
+    public int countTestCases() {
+        return delegate.countTestCases();
+    }
+
+    public void run(TestResult result) {
+        delegate.run(result);
+    }
+
+    /**
+     * Returns a {@link com.googlecode.atinject.auto.Car} constructed by an
+     * injector with the following configuration:
+     *
+     * <ul>
+     *   <li>{@link com.googlecode.atinject.auto.Car} is implemented by
+     *       {@link com.googlecode.atinject.auto.Convertible Convertible}.
+     *   <li>{@link com.googlecode.atinject.auto.Drivers @Drivers} {@link com.googlecode.atinject.auto.Seat Seat} is
+     *       implemented by {@link com.googlecode.atinject.auto.DriversSeat DriversSeat}.
+     *   <li>{@link com.googlecode.atinject.auto.Engine Engine} is implemented by
+     *       {@link com.googlecode.atinject.auto.V8Engine V8Engine}.
+     *   <li>{@link javax.inject.Named @Named("spare")} {@link com.googlecode.atinject.auto.Tire Tire} is implemented by
+     *       {@link com.googlecode.atinject.auto.accessories.SpareTire SpareTire}.
+     *   <li>The following concrete classes may also be injected: {@link com.googlecode.atinject.auto.accessories.Cupholder
+     *       Cupholder}, {@link com.googlecode.atinject.auto.Tire Tire} and {@link com.googlecode.atinject.auto.FuelTank
+     *       FuelTank}.
+     * </ul>
+     *
+     * <p>The static members of the following types shall also be injected: {@link com.googlecode.atinject.auto.Convertible
+     * Convertible}, {@link com.googlecode.atinject.auto.Tire Tire}, and {@link
+     * com.googlecode.atinject.auto.accessories.SpareTire SpareTire}.
+     */
+    protected abstract Car getCar();
+
+    static class Failure implements Test {
+        final String message;
+        final Throwable t;
+        Failure(String message, Throwable t) {
+            this.message = message;
+            this.t = t;
+        }
+        public int countTestCases() {
+            return 1;
+        }
+        public void run(TestResult result) {
+            result.startTest(this);
+            result.addError(this, t);
+            result.endTest(this);
+        }
+        @Override public String toString() {
+            return message;
+        }
     }
 }
