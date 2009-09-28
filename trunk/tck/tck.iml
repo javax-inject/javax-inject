@@ -9,6 +9,15 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="atinject" />
     <orderEntry type="library" name="Guice" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../lib/junit.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 
