@@ -20,20 +20,15 @@ import org.atinject.tck.auto.Car;
 import org.atinject.tck.auto.Convertible;
 
 import junit.framework.Test;
-import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 /**
- * Extend this class, implement {@link #getCar()}, and declare a static
- * {@code suite} method (a JUnit convention):
+ * Call {@link #testsFor} from a JUnit {@code suite} method:
  *
  * <pre>
- * public class MyTck extends Tck {
- *   protected Car getCar() {
- *      return new MyInjector().getInstance(Car.class);
- *   }
+ * public class MyTck {
  *   public static Test suite() {
- *     return new MyTck();
+ *     return Tck.testsFor(new MyInjector().getInstance(Car.class));
  *   }
  * }
  * </pre>
@@ -43,49 +38,16 @@ import junit.framework.TestSuite;
  * <pre>
  * java junit.textui.TestRunner MyTck
  * </pre>
+ *
+ * @deprecated
  */
-public abstract class Tck implements Test {
+public class Tck {
 
-    private final Test delegate;
-
-    protected Tck() {
-        Car car;
-        try {
-            car = getCar();
-        } catch (Throwable t) {
-            delegate = new CarWontStart("getCar() threw an exception", t);
-            return;
-        }
-
-        if (car == null) {
-            delegate = new CarWontStart("getCar() returned null",
-                    new NullPointerException("getCar() returned null"));
-            return;
-        }
-
-        if (!(car instanceof Convertible)) {
-            delegate = new CarWontStart(
-                    "getCar() did not return an instance of Convertible",
-                    new ClassCastException("Expected Convertible, got "
-                            + car.getClass().getName()));
-            return;
-        }
-
-        Convertible.Test.car = (Convertible) car;
-        delegate = new TestSuite(Convertible.Test.class);
-    }
-
-    public int countTestCases() {
-        return delegate.countTestCases();
-    }
-
-    public void run(TestResult result) {
-        delegate.run(result);
-    }
+    private Tck() {}
 
     /**
-     * Returns a {@link org.atinject.tck.auto.Car} constructed by an
-     * injector with the following configuration:
+     * Constructs a test suite for the given {@link Car} instance. Create the
+     * {@code Car} instance using an injector with the following configuration:
      *
      * <ul>
      *   <li>{@link org.atinject.tck.auto.Car} is implemented by
@@ -104,6 +66,23 @@ public abstract class Tck implements Test {
      * <p>The static members of the following types shall also be injected: {@link org.atinject.tck.auto.Convertible
      * Convertible}, {@link org.atinject.tck.auto.Tire Tire}, and {@link
      * org.atinject.tck.auto.accessories.SpareTire SpareTire}.
+     *
+     * <p><b>Note:</b> Due to limitations of JUnit, you must create and run
+     * only one test instance at a time.
+     *
+     * @throws NullPointerException if car is null
+     * @throws ClassCastException if car doesn't extend Convertible
      */
-    protected abstract Car getCar();
+    public static Test testsFor(Car car) {
+        if (car == null) {
+            throw new NullPointerException("car");
+        }
+
+        if (!(car instanceof Convertible)) {
+            throw new ClassCastException("car doesn't implement Convertible");
+        }
+
+        Convertible.Tests.car = (Convertible) car;
+        return new TestSuite(Convertible.Tests.class);
+    }
 }
