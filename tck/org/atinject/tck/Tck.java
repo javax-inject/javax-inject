@@ -23,17 +23,22 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Call {@link #testsFor} from a JUnit {@code suite} method:
+ * Maufactures the compatibility test suite. Call {@link #testsFor testsFor}
+ * from a JUnit static {@code suite} method:
  *
  * <pre>
+ * import junit.framework.Test;
+ * import org.atinject.tck.Tck;
+ *
  * public class MyTck {
  *   public static Test suite() {
- *     return Tck.testsFor(new MyInjector().getInstance(Car.class), true, true);
+ *     Car car = new MyInjector().getInstance(Car.class);
+ *     return Tck.testsFor(car, true, true);
  *   }
  * }
  * </pre>
  *
- * <p>Then, run the tests using JUnit. For example:
+ * <p>Run the tests using JUnit. For example:
  *
  * <pre>
  * java junit.textui.TestRunner MyTck
@@ -61,9 +66,10 @@ public class Tck {
      *       FuelTank}.
      * </ul>
      *
-     * <p>If static injection is supported, the static members of the following
-     * types shall also be injected: {@link org.atinject.tck.auto.Convertible
-     * Convertible}, {@link org.atinject.tck.auto.Tire Tire}, and {@link
+     * <p>If static member injection is supported, the static members of the
+     * following types shall also be injected:
+     * {@link org.atinject.tck.auto.Convertible Convertible},
+     * {@link org.atinject.tck.auto.Tire Tire}, and {@link
      * org.atinject.tck.auto.accessories.SpareTire SpareTire}.
      *
      * @param car to test
