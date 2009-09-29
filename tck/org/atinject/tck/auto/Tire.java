@@ -52,60 +52,71 @@ public class Tire {
     protected boolean protectedMethodForOverrideInjected;
     protected boolean publicMethodForOverrideInjected;
 
+    public boolean methodInjectedBeforeFields;
+    public boolean subtypeFieldInjectedBeforeSupertypeMethods;
+    public boolean subtypeMethodInjectedBeforeSupertypeMethods;
+    public static boolean staticMethodInjectedBeforeStaticFields;
+    public static boolean subtypeStaticFieldInjectedBeforeSupertypeStaticMethods;
+    public static boolean subtypeStaticMethodInjectedBeforeSupertypeStaticMethods;
+    public boolean similarPrivateMethodInjectedTwice;
+    public boolean similarPackagePrivateMethodInjectedTwice;
+    public boolean overriddenProtectedMethodInjectedTwice;
+    public boolean overriddenPublicMethodInjectedTwice;
+
     @Inject public Tire(FuelTank constructorInjection) {
         this.constructorInjection = constructorInjection;
     }
 
     @Inject void supertypeMethodInjection(FuelTank methodInjection) {
         if (!hasTireBeenFieldInjected()) {
-            moreProblems.add("Method injected before fields");
+            methodInjectedBeforeFields = true;
         }
         if (hasSpareTireBeenFieldInjected()) {
-            moreProblems.add("Subtype field injected before supertype method");
+            subtypeFieldInjectedBeforeSupertypeMethods = true;
         }
         if (hasSpareTireBeenMethodInjected()) {
-            moreProblems.add("Subtype method injected before supertype method");
+            subtypeMethodInjectedBeforeSupertypeMethods = true;
         }
         this.methodInjection = methodInjection;
     }
 
     @Inject static void supertypeStaticMethodInjection(FuelTank methodInjection) {
         if (!Tire.hasBeenStaticFieldInjected()) {
-            moreProblems.add("Static method injected before static fields");
+            staticMethodInjectedBeforeStaticFields = true;
         }
         if (SpareTire.hasBeenStaticFieldInjected()) {
-            moreProblems.add("Subtype static field injected before supertype static method");
+            subtypeStaticFieldInjectedBeforeSupertypeStaticMethods = true;
         }
         if (SpareTire.hasBeenStaticMethodInjected()) {
-            moreProblems.add("Subtype static method injected before supertype static method");
+            subtypeStaticMethodInjectedBeforeSupertypeStaticMethods = true;
         }
         staticMethodInjection = methodInjection;
     }
 
     @Inject private void injectPrivateMethod() {
         if (superPrivateMethodInjected) {
-            moreProblems.add("Overridden private method injected twice");
+            similarPrivateMethodInjectedTwice = true;
         }
         superPrivateMethodInjected = true;
     }
 
     @Inject void injectPackagePrivateMethod() {
         if (superPackagePrivateMethodInjected) {
-            moreProblems.add("Overridden package private method injected twice");
+            similarPackagePrivateMethodInjectedTwice = true;
         }
         superPackagePrivateMethodInjected = true;
     }
 
     @Inject protected void injectProtectedMethod() {
         if (superProtectedMethodInjected) {
-            moreProblems.add("Overridden protected method injected twice");
+            overriddenProtectedMethodInjectedTwice = true;
         }
         superProtectedMethodInjected = true;
     }
 
     @Inject public void injectPublicMethod() {
         if (superPublicMethodInjected) {
-            moreProblems.add("Overridden public method injected twice");
+            overriddenPublicMethodInjectedTwice = true;
         }
         superPublicMethodInjected = true;
     }

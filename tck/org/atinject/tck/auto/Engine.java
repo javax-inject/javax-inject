@@ -17,20 +17,17 @@
 package org.atinject.tck.auto;
 
 import org.atinject.tck.auto.accessories.SpareTire;
-import org.atinject.tck.Tester;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.List;
-import java.util.ArrayList;
 
 public abstract class Engine {
 
-    protected final List<String> moreProblems = new ArrayList<String>();
-
     protected boolean publicNoArgsConstructorInjected;
-    protected boolean packagePrivateMethodInjected;
-    protected boolean packagePrivateMethodForOverrideInjected;
+    protected boolean subPackagePrivateMethodInjected;
+    protected boolean superPackagePrivateMethodInjected;
+    protected boolean subPackagePrivateMethodForOverrideInjected;
+    protected boolean superPackagePrivateMethodForOverrideInjected;
 
     protected boolean overriddenTwiceWithOmissionInMiddleInjected;
     protected boolean overriddenTwiceWithOmissionInSubclassInjected;
@@ -40,12 +37,15 @@ public abstract class Engine {
     protected Tire tireA;
     protected Tire tireB;
 
+    public boolean overriddenPackagePrivateMethodInjectedTwice;
+    public boolean qualifiersInheritedFromOverriddenMethod;
+
     @Inject void injectPackagePrivateMethod() {
-        moreProblems.add("Unexpected call to supertype package private method");
+        superPackagePrivateMethodInjected = true;
     }
 
     @Inject void injectPackagePrivateMethodForOverride() {
-        moreProblems.add("Unexpected call to supertype package private method");
+        superPackagePrivateMethodForOverrideInjected = true;
     }
 
     @Inject public void injectQualifiers(@Drivers Seat seatA, Seat seatB,
@@ -54,7 +54,7 @@ public abstract class Engine {
                 || (seatB instanceof DriversSeat)
                 || !(tireA instanceof SpareTire)
                 || (tireB instanceof SpareTire)) {
-            moreProblems.add("Qualifiers inherited from overridden methods");
+            qualifiersInheritedFromOverriddenMethod = true;
         }
     }
 
@@ -65,7 +65,4 @@ public abstract class Engine {
     @Inject public void injectTwiceOverriddenWithOmissionInSubclass() {
         overriddenTwiceWithOmissionInSubclassInjected = true;
     }
-
-    public abstract void check(Tester tester);
-
 }

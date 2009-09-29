@@ -16,17 +16,13 @@
 
 package org.atinject.tck.auto;
 
-import org.atinject.tck.Tester;
-import org.atinject.tck.auto.accessories.SpareTire;
-import org.atinject.tck.auto.accessories.Cupholder;
-
 import junit.framework.TestCase;
+import org.atinject.tck.auto.accessories.Cupholder;
+import org.atinject.tck.auto.accessories.SpareTire;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Convertible implements Car {
 
@@ -39,8 +35,6 @@ public class Convertible implements Car {
     private boolean methodWithZeroParamsInjected;
     private boolean methodWithMultipleParamsInjected;
     private boolean methodWithNonVoidReturnInjected;
-
-    private List<String> moreProblems = new ArrayList<String>();
 
     private Seat constructorPlainSeat;
     private Seat constructorDriversSeat;
@@ -175,92 +169,6 @@ public class Convertible implements Car {
         };
     }
 
-    public void check(Tester tester) {
-        tester.addProblems(moreProblems);
-
-        tester.test(methodWithZeroParamsInjected, "Zero-parmeter method not injected");
-        tester.test(methodWithMultipleParamsInjected, "Multi-parameter method not injected");
-        tester.test(methodWithNonVoidReturnInjected, "Non-void method not injected");
-        tester.test(driversSeatA != driversSeatB, "@Singleton inherited from supertype");
-
-        testInjectedValues(tester);
-        testProviders(tester);
-
-        Engine engine = engineProvider.get();
-
-        if (spareTire == null || cupholder == null || engineProvider == null) {
-            tester.addProblem("Fields not injected");
-        } else {
-            spareTire.check(tester);
-            cupholder.check(tester);
-
-            if (engine == null) {
-                tester.addProblem("Provider returned null");
-            } else {
-                engine.check(tester);
-            }
-        }
-    }
-
-    private void testInjectedValues(Tester tester) {
-        testExpectedValues(tester, "injected constructor",
-                constructorPlainSeat, constructorDriversSeat, constructorPlainTire, constructorSpareTire);
-        testExpectedValues(tester, "provider injected into a constructor", constructorPlainSeatProvider.get(),
-                constructorDriversSeatProvider.get(), constructorPlainTireProvider.get(), constructorSpareTireProvider.get());
-        testExpectedValues(tester, "injected field",
-                fieldPlainSeat, fieldDriversSeat, fieldPlainTire, fieldSpareTire);
-        testExpectedValues(tester, "provider injected into a field", fieldPlainSeatProvider.get(),
-                fieldDriversSeatProvider.get(), fieldPlainTireProvider.get(), fieldSpareTireProvider.get());
-        testExpectedValues(tester, "injected method",
-                methodPlainSeat, methodDriversSeat, methodPlainTire, methodSpareTire);
-        testExpectedValues(tester, "provider injected into a method", methodPlainSeatProvider.get(),
-                methodDriversSeatProvider.get(), methodPlainTireProvider.get(), methodSpareTireProvider.get());
-        testExpectedValues(tester, "injected static field",
-                staticFieldPlainSeat, staticFieldDriversSeat, staticFieldPlainTire, staticFieldSpareTire);
-        testExpectedValues(tester, "provider injected into a static field", staticFieldPlainSeatProvider.get(),
-                staticFieldDriversSeatProvider.get(), staticFieldPlainTireProvider.get(), staticFieldSpareTireProvider.get());
-        testExpectedValues(tester, "injected static method",
-                staticMethodPlainSeat, staticMethodDriversSeat, staticMethodPlainTire, staticMethodSpareTire);
-        testExpectedValues(tester, "provider injected into a static method", staticMethodPlainSeatProvider.get(),
-                staticMethodDriversSeatProvider.get(), staticMethodPlainTireProvider.get(), staticMethodSpareTireProvider.get());
-    }
-
-    private void testProviders(Tester tester) {
-        testProviderProvidesNewValuesEachTime(tester,
-                constructorDriversSeatProvider, constructorPlainTireProvider, constructorSpareTireProvider);
-        testProviderProvidesNewValuesEachTime(tester,
-                fieldDriversSeatProvider, fieldPlainTireProvider, fieldSpareTireProvider);
-        testProviderProvidesNewValuesEachTime(tester,
-                methodDriversSeatProvider, methodPlainTireProvider, methodSpareTireProvider);
-        testProviderProvidesSameValueEachTime(tester, constructorPlainSeatProvider);
-        testProviderProvidesSameValueEachTime(tester, fieldPlainSeatProvider);
-        testProviderProvidesSameValueEachTime(tester, methodPlainSeatProvider);
-    }
-
-    private void testProviderProvidesSameValueEachTime(Tester tester, Provider<Seat> provider) {
-        tester.test(provider.get() == provider.get(),
-                "Different instance returned by repeated calls to Provider.get()");
-    }
-
-    private void testExpectedValues(Tester tester, String injectionMechanism,
-                Seat plainSeat, Seat driversSeat, Tire plainTire, Tire spareTire) {
-        tester.test(!(plainSeat instanceof DriversSeat),
-                "Wrong value injected for " + injectionMechanism);
-        tester.test(driversSeat instanceof DriversSeat,
-                "Wrong value injected for qualified " + injectionMechanism);
-        tester.test(!(plainTire instanceof SpareTire),
-                "Wrong value injected for " + injectionMechanism);
-        tester.test(spareTire instanceof SpareTire,
-                "Wrong value injected for @Named " + injectionMechanism);
-    }
-
-    private void testProviderProvidesNewValuesEachTime(Tester tester, Provider<?>... providers) {
-        for (Provider provider : providers) {
-            tester.test(provider.get() != provider.get(),
-                    "Same instance returned by repeated calls to Provider.get()");
-        }
-    }
-
     /**
      * Tests against the Convertible instance.
      */
@@ -269,13 +177,369 @@ public class Convertible implements Car {
         public static ThreadLocal<Convertible> localConvertible
                 = new ThreadLocal<Convertible>();
 
-        private final Car car = localConvertible.get();
+        private final Convertible car = localConvertible.get();
+        private final Cupholder cupholder = car.cupholder;
+        private final SpareTire spareTire = car.spareTire;
+        private final Engine engine = car.engineProvider.get();
 
-        public void testAll() {
-            Tester tester = new Tester();
-            car.check(tester);
-            assertFalse(tester.problems().toString(),
-                    tester.problems().iterator().hasNext());
+
+        // smoke tests: if these fail all bets are off
+
+        public void testFieldsInjected() {
+            assertTrue(cupholder != null && spareTire != null);
         }
+
+        public void testProviderReturnedValues() {
+            assertTrue(engine != null);
+        }
+
+
+        // injecting different kinds of members
+
+        public void testMethodWithZeroParametersInjected() {
+            assertTrue(car.methodWithZeroParamsInjected);
+        }
+
+        public void testMethodWithMultipleParametersInjected() {
+            assertTrue(car.methodWithMultipleParamsInjected);
+        }
+
+        public void testNonVoidMethodInjected() {
+            assertTrue(car.methodWithNonVoidReturnInjected);
+        }
+
+        public void testPublicNoArgsConstructorInjected() {
+            assertTrue(engine.publicNoArgsConstructorInjected);
+        }
+
+        public void testSubtypeFieldsInjected() {
+            assertTrue(spareTire.hasSpareTireBeenFieldInjected());
+        }
+
+        public void testSubtypeMethodsInjected() {
+            assertTrue(spareTire.hasSpareTireBeenMethodInjected());
+        }
+
+        public void testSupertypeFieldsInjected() {
+            assertTrue(spareTire.hasTireBeenFieldInjected());
+        }
+
+        public void testSupertypeMethodsInjected() {
+            assertTrue(spareTire.hasTireBeenMethodInjected());
+        }
+
+        public void testSubtypeStaticFieldsInjected() {
+            assertTrue(SpareTire.hasBeenStaticFieldInjected());
+        }
+
+        public void testSubtypeStaticMethodsInjected() {
+            assertTrue(SpareTire.hasBeenStaticMethodInjected());
+        }
+
+        public void testSupertypeStaticFieldsInjected() {
+            assertTrue(Tire.hasBeenStaticFieldInjected());
+        }
+
+        public void testSupertypeStaticMethodsInjected() {
+            assertTrue(Tire.hasBeenStaticMethodInjected());
+        }
+
+        public void testTwiceOverriddenMethodInjectedWhenMiddleLacksAnnotation() {
+            assertTrue(engine.overriddenTwiceWithOmissionInMiddleInjected);
+        }
+
+        // injected values
+
+        public void testQualifiersNotInheritedFromOverriddenMethod() {
+            assertFalse(engine.qualifiersInheritedFromOverriddenMethod);
+        }
+
+        public void testConstructorInjectionWithValues() {
+            assertFalse("Expected unqualified value",
+                    car.constructorPlainSeat instanceof DriversSeat);
+            assertFalse("Expected unqualified value",
+                    car.constructorPlainTire instanceof SpareTire);
+            assertTrue("Expected qualified value",
+                    car.constructorDriversSeat instanceof DriversSeat);
+            assertTrue("Expected qualified value",
+                    car.constructorSpareTire instanceof SpareTire);
+        }
+
+        public void testFieldInjectionWithValues() {
+            assertFalse("Expected unqualified value",
+                    car.fieldPlainSeat instanceof DriversSeat);
+            assertFalse("Expected unqualified value",
+                    car.fieldPlainTire instanceof SpareTire);
+            assertTrue("Expected qualified value",
+                    car.fieldDriversSeat instanceof DriversSeat);
+            assertTrue("Expected qualified value",
+                    car.fieldSpareTire instanceof SpareTire);
+        }
+
+        public void testMethodInjectionWithValues() {
+            assertFalse("Expected unqualified value",
+                    car.methodPlainSeat instanceof DriversSeat);
+            assertFalse("Expected unqualified value",
+                    car.methodPlainTire instanceof SpareTire);
+            assertTrue("Expected qualified value",
+                    car.methodDriversSeat instanceof DriversSeat);
+            assertTrue("Expected qualified value",
+                    car.methodSpareTire instanceof SpareTire);
+        }
+
+        public void testStaticFieldInjectionWithValues() {
+            assertFalse("Expected unqualified value",
+                    staticFieldPlainSeat instanceof DriversSeat);
+            assertFalse("Expected unqualified value",
+                    staticFieldPlainTire instanceof SpareTire);
+            assertTrue("Expected qualified value",
+                    staticFieldDriversSeat instanceof DriversSeat);
+            assertTrue("Expected qualified value",
+                    staticFieldSpareTire instanceof SpareTire);
+        }
+
+        public void testStaticMethodInjectionWithValues() {
+            assertFalse("Expected unqualified value",
+                    staticMethodPlainSeat instanceof DriversSeat);
+            assertFalse("Expected unqualified value",
+                    staticMethodPlainTire instanceof SpareTire);
+            assertTrue("Expected qualified value",
+                    staticMethodDriversSeat instanceof DriversSeat);
+            assertTrue("Expected qualified value",
+                    staticMethodSpareTire instanceof SpareTire);
+        }
+
+
+        // injected providers
+
+        public void testConstructorInjectionWithProviders() {
+            assertFalse("Expected unqualified value",
+                    car.constructorPlainSeatProvider.get() instanceof DriversSeat);
+            assertFalse("Expected unqualified value",
+                    car.constructorPlainTireProvider.get() instanceof SpareTire);
+            assertTrue("Expected qualified value",
+                    car.constructorDriversSeatProvider.get() instanceof DriversSeat);
+            assertTrue("Expected qualified value",
+                    car.constructorSpareTireProvider.get() instanceof SpareTire);
+        }
+
+        public void testFieldInjectionWithProviders() {
+            assertFalse("Expected unqualified value",
+                    car.fieldPlainSeatProvider.get() instanceof DriversSeat);
+            assertFalse("Expected unqualified value",
+                    car.fieldPlainTireProvider.get() instanceof SpareTire);
+            assertTrue("Expected qualified value",
+                    car.fieldDriversSeatProvider.get() instanceof DriversSeat);
+            assertTrue("Expected qualified value",
+                    car.fieldSpareTireProvider.get() instanceof SpareTire);
+        }
+
+        public void testMethodInjectionWithProviders() {
+            assertFalse("Expected unqualified value",
+                    car.methodPlainSeatProvider.get() instanceof DriversSeat);
+            assertFalse("Expected unqualified value",
+                    car.methodPlainTireProvider.get() instanceof SpareTire);
+            assertTrue("Expected qualified value",
+                    car.methodDriversSeatProvider.get() instanceof DriversSeat);
+            assertTrue("Expected qualified value",
+                    car.methodSpareTireProvider.get() instanceof SpareTire);
+        }
+
+        public void testStaticFieldInjectionWithProviders() {
+            assertFalse("Expected unqualified value",
+                    staticFieldPlainSeatProvider.get() instanceof DriversSeat);
+            assertFalse("Expected unqualified value",
+                    staticFieldPlainTireProvider.get() instanceof SpareTire);
+            assertTrue("Expected qualified value",
+                    staticFieldDriversSeatProvider.get() instanceof DriversSeat);
+            assertTrue("Expected qualified value",
+                    staticFieldSpareTireProvider.get() instanceof SpareTire);
+        }
+
+        public void testStaticMethodInjectionWithProviders() {
+            assertFalse("Expected unqualified value",
+                    staticMethodPlainSeatProvider.get() instanceof DriversSeat);
+            assertFalse("Expected unqualified value",
+                    staticMethodPlainTireProvider.get() instanceof SpareTire);
+            assertTrue("Expected qualified value",
+                    staticMethodDriversSeatProvider.get() instanceof DriversSeat);
+            assertTrue("Expected qualified value",
+                    staticMethodSpareTireProvider.get() instanceof SpareTire);
+        }
+
+
+        // singletons
+
+        public void testConstructorInjectedProviderYieldsSingleton() {
+            assertSame("Expected same value",
+                    car.constructorPlainSeatProvider.get(), car.constructorPlainSeatProvider.get());
+        }
+
+        public void testFieldInjectedProviderYieldsSingleton() {
+            assertSame("Expected same value",
+                    car.fieldPlainSeatProvider.get(), car.fieldPlainSeatProvider.get());
+        }
+
+        public void testMethodInjectedProviderYieldsSingleton() {
+            assertSame("Expected same value",
+                    car.methodPlainSeatProvider.get(), car.methodPlainSeatProvider.get());
+        }
+
+        public void testCircularlyDependentSingletons() {
+            // uses provider.get() to get around circular deps
+            assertSame(cupholder.seatProvider.get().getCupholder(), cupholder);
+        }
+
+
+        // non singletons
+
+        public void testSingletonAnnotationNotInheritedFromSupertype() {
+            assertNotSame(car.driversSeatA, car.driversSeatB);
+        }
+
+        public void testConstructorInjectedProviderYieldsDistinctValues() {
+            assertNotSame("Expected distinct values",
+                    car.constructorDriversSeatProvider.get(), car.constructorDriversSeatProvider.get());
+            assertNotSame("Expected distinct values",
+                    car.constructorPlainTireProvider.get(), car.constructorPlainTireProvider.get());
+            assertNotSame("Expected distinct values",
+                    car.constructorSpareTireProvider.get(), car.constructorSpareTireProvider.get());
+        }
+
+        public void testFieldInjectedProviderYieldsDistinctValues() {
+            assertNotSame("Expected distinct values",
+                    car.fieldDriversSeatProvider.get(), car.fieldDriversSeatProvider.get());
+            assertNotSame("Expected distinct values",
+                    car.fieldPlainTireProvider.get(), car.fieldPlainTireProvider.get());
+            assertNotSame("Expected distinct values",
+                    car.fieldSpareTireProvider.get(), car.fieldSpareTireProvider.get());
+        }
+
+        public void testMethodInjectedProviderYieldsDistinctValues() {
+            assertNotSame("Expected distinct values",
+                    car.methodDriversSeatProvider.get(), car.methodDriversSeatProvider.get());
+            assertNotSame("Expected distinct values",
+                    car.methodPlainTireProvider.get(), car.methodPlainTireProvider.get());
+            assertNotSame("Expected distinct values",
+                    car.methodSpareTireProvider.get(), car.methodSpareTireProvider.get());
+        }
+
+
+        // mix inheritance + visibility
+
+        public void testSupertypePrivateMethodInjected() {
+            assertTrue(spareTire.superPrivateMethodInjected);
+            assertTrue(spareTire.subPrivateMethodInjected);
+        }
+
+        public void testPackagePrivateMethodInjectedSamePackage() {
+            assertTrue(engine.subPackagePrivateMethodInjected);
+            assertFalse(engine.superPackagePrivateMethodInjected);
+        }
+
+        public void testPackagePrivateMethodInjectedDifferentPackages() {
+            assertTrue(spareTire.subPackagePrivateMethodInjected);
+            assertTrue(spareTire.superPackagePrivateMethodInjected);
+        }
+
+        public void testOverriddenProtectedMethodInjection() {
+            assertTrue(spareTire.subProtectedMethodInjected);
+            assertFalse(spareTire.superProtectedMethodInjected);
+        }
+
+        public void testOverriddenPublicMethodNotInjected() {
+            assertTrue(spareTire.subPublicMethodInjected);
+            assertFalse(spareTire.superPublicMethodInjected);
+        }
+
+
+        // inject in order
+
+        public void testFieldsInjectedBeforeMethods() {
+            assertFalse(spareTire.methodInjectedBeforeFields);
+        }
+
+        public void testStaticFieldsInjectedBeforeMethods() {
+            assertFalse(SpareTire.staticMethodInjectedBeforeStaticFields);
+        }
+
+        public void testSupertypeFieldsInjectedBeforeSubtypeMethods() {
+            assertFalse(spareTire.subtypeFieldInjectedBeforeSupertypeMethods);
+        }
+
+        public void testSupertypeMethodsInjectedBeforeSubtypeMethods() {
+            assertFalse(spareTire.subtypeMethodInjectedBeforeSupertypeMethods);
+        }
+
+        public void testSupertypeStaticMethodsInjectedBeforeSubtypeStaticFields() {
+            assertFalse(SpareTire.subtypeStaticFieldInjectedBeforeSupertypeStaticMethods);
+        }
+
+        public void testSupertypeStaticMethodsInjectedBeforeSubtypeStaticMethods() {
+            assertFalse(SpareTire.subtypeStaticMethodInjectedBeforeSupertypeStaticMethods);
+        }
+
+
+        // necessary injections occur
+
+        public void testPrivateMethodInjectedEvenWhenSimilarMethodLacksAnnotation() {
+            assertTrue(spareTire.subPrivateMethodForOverrideInjected);
+        }
+
+        public void testPackagePrivateMethodInjectedEvenWhenSimilarMethodLacksAnnotation() {
+            assertTrue(spareTire.subPackagePrivateMethodForOverrideInjected);
+        }
+
+
+        // override or similar method without @Inject
+
+        public void testPrivateMethodNotInjectedWhenSupertypeHasAnnotatedSimilarMethod() {
+            assertFalse(spareTire.superPrivateMethodForOverrideInjected);
+        }
+
+        public void testPackagePrivateMethodNotInjectedWhenOverrideLacksAnnotation() {
+            assertFalse(engine.subPackagePrivateMethodForOverrideInjected);
+            assertFalse(engine.superPackagePrivateMethodForOverrideInjected);
+        }
+
+        public void testPackagePrivateMethodNotInjectedWhenSupertypeHasAnnotatedSimilarMethod() {
+            assertFalse(spareTire.superPackagePrivateMethodForOverrideInjected);
+        }
+
+        public void testProtectedMethodNotInjectedWhenOverrideNotAnnotated() {
+            assertFalse(spareTire.protectedMethodForOverrideInjected);
+        }
+
+        public void testPublicMethodNotInjectedWhenOverrideNotAnnotated() {
+            assertFalse(spareTire.publicMethodForOverrideInjected);
+        }
+
+        public void testTwiceOverriddenMethodNotInjectedWhenOverrideLacksAnnotation() {
+            assertFalse(engine.overriddenTwiceWithOmissionInSubclassInjected);
+        }
+
+
+        // inject only once
+
+        public void testOverriddenPackagePrivateMethodInjectedOnlyOnce() {
+            assertFalse(engine.overriddenPackagePrivateMethodInjectedTwice);
+        }
+
+        public void testSimilarPrivateMethodInjectedOnlyOnce() {
+            assertFalse(spareTire.similarPrivateMethodInjectedTwice);
+        }
+
+        public void testSimilarPackagePrivateMethodInjectedOnlyOnce() {
+            assertFalse(spareTire.similarPackagePrivateMethodInjectedTwice);
+        }
+
+        public void testOverriddenProtectedMethodInjectedOnlyOnce() {
+            assertFalse(spareTire.overriddenProtectedMethodInjectedTwice);
+        }
+
+        public void testOverriddenPublicMethodInjectedOnlyOnce() {
+            assertFalse(spareTire.overriddenPublicMethodInjectedTwice);
+        }
+
     }
 }

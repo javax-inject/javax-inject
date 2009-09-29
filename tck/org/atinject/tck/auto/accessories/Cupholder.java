@@ -17,29 +17,18 @@
 package org.atinject.tck.auto.accessories;
 
 import org.atinject.tck.auto.Seat;
-import org.atinject.tck.Tester;
 
-import javax.inject.Singleton;
-import javax.inject.Provider;
 import javax.inject.Inject;
-import java.util.List;
-import java.util.ArrayList;
+import javax.inject.Provider;
+import javax.inject.Singleton;
 
 @Singleton
 public class Cupholder {
 
-    protected final List<String> moreProblems = new ArrayList<String>();
-
-    private final Provider<Seat> seatProvider;
+    public final Provider<Seat> seatProvider;
 
     @Inject
     public Cupholder(Provider<Seat> seatProvider) {
         this.seatProvider = seatProvider;
-    }
-
-    public void check(Tester tester) {
-        tester.addProblems(moreProblems);
-
-        tester.test(seatProvider.get().getCupholder() == this, "Circularly dependent singletons not singleton");
     }
 }

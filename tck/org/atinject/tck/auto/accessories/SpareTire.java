@@ -16,7 +16,6 @@
 
 package org.atinject.tck.auto.accessories;
 
-import org.atinject.tck.Tester;
 import org.atinject.tck.auto.FuelTank;
 import org.atinject.tck.auto.Tire;
 
@@ -37,42 +36,42 @@ public class SpareTire extends Tire {
 
     @Inject void subtypeMethodInjection(FuelTank methodInjection) {
         if (!hasSpareTireBeenFieldInjected()) {
-            moreProblems.add("Methods injected before fields");
+            methodInjectedBeforeFields = true;
         }
         this.methodInjection = methodInjection;
     }
 
     @Inject static void subtypeStaticMethodInjection(FuelTank methodInjection) {
         if (!hasBeenStaticFieldInjected()) {
-            moreProblems.add("Static methods injected before static fields");
+            staticMethodInjectedBeforeStaticFields = true;
         }
         staticMethodInjection = methodInjection;
     }
 
     @Inject private void injectPrivateMethod() {
         if (subPrivateMethodInjected) {
-            moreProblems.add("Overridden private method injected twice");
+            similarPrivateMethodInjectedTwice = true;
         }
         subPrivateMethodInjected = true;
     }
 
     @Inject void injectPackagePrivateMethod() {
         if (subPackagePrivateMethodInjected) {
-            moreProblems.add("Overridden package private method injected twice");
+            similarPackagePrivateMethodInjectedTwice = true;
         }
         subPackagePrivateMethodInjected = true;
     }
 
     @Inject protected void injectProtectedMethod() {
         if (subProtectedMethodInjected) {
-            moreProblems.add("Overridden protected method injected twice");
+            overriddenProtectedMethodInjectedTwice = true;
         }
         subProtectedMethodInjected = true;
     }
 
     @Inject public void injectPublicMethod() {
         if (subPublicMethodInjected) {
-            moreProblems.add("Overridden public method injected twice");
+            overriddenPublicMethodInjectedTwice = true;
         }
         subPublicMethodInjected = true;
     }
@@ -93,11 +92,11 @@ public class SpareTire extends Tire {
         publicMethodForOverrideInjected = true;
     }
 
-    protected boolean hasSpareTireBeenFieldInjected() {
+    public boolean hasSpareTireBeenFieldInjected() {
         return fieldInjection != NEVER_INJECTED;
     }
 
-    protected boolean hasSpareTireBeenMethodInjected() {
+    public boolean hasSpareTireBeenMethodInjected() {
         return methodInjection != NEVER_INJECTED;
     }
 
@@ -107,45 +106,5 @@ public class SpareTire extends Tire {
 
     public static boolean hasBeenStaticMethodInjected() {
         return staticMethodInjection != NEVER_INJECTED;
-    }
-
-    /**
-     * This class is used to check inheritance. By existing in a separate package
-     * from Tire, it can make sure the injector does the right thing with overrides
-     * of package-private methods.
-     */
-    public void check(Tester tester) {
-        tester.addProblems(moreProblems);
-
-        tester.test(hasSpareTireBeenFieldInjected(), "Subtype fields not injected");
-        tester.test(hasSpareTireBeenMethodInjected(), "Subtype methods not injected");
-        tester.test(hasTireBeenFieldInjected(), "Supertype fields not injected");
-        tester.test(hasTireBeenMethodInjected(), "Supertype methods not injected");
-        tester.test(SpareTire.hasBeenStaticFieldInjected(), "Subtype static fields not injected");
-        tester.test(SpareTire.hasBeenStaticMethodInjected(), "Subtype static methods not injected");
-        tester.test(Tire.hasBeenStaticFieldInjected(), "Supertype static fields not injected");
-        tester.test(Tire.hasBeenStaticMethodInjected(), "Supertype static methods not injected");
-
-        tester.test(superPrivateMethodInjected, "Supertype private method not injected");
-        tester.test(superPackagePrivateMethodInjected, "Supertype private method not injected");
-        tester.test(!superProtectedMethodInjected, "Overridden protected method injected!");
-        tester.test(!superPublicMethodInjected, "Overridden public method injected!");
-        tester.test(subPrivateMethodInjected, "Subtype private method not injected");
-        tester.test(subPackagePrivateMethodInjected, "Subtype private method not injected");
-        tester.test(subProtectedMethodInjected, "Subtype protected method not injected");
-        tester.test(subPublicMethodInjected, "Subtype public method not injected");
-
-        tester.test(subPrivateMethodForOverrideInjected,
-                "Private method not injected when a subtype has a similar method that lacks @Inject");
-        tester.test(subPackagePrivateMethodForOverrideInjected,
-                "Package private method not injected when a subtype has a similar method that lacks @Inject");
-        tester.test(!superPrivateMethodForOverrideInjected,
-                "Private method injected when a supertype has a similar method annotated @Inject");
-        tester.test(!superPackagePrivateMethodForOverrideInjected,
-                "Package private method injected when a supertype has a similar method annotated @Inject");
-        tester.test(!protectedMethodForOverrideInjected,
-                "Protected method injected, even though its override lacks @Inject");
-        tester.test(!publicMethodForOverrideInjected,
-                "Public method injected, even though its override lacks @Inject");
     }
 }

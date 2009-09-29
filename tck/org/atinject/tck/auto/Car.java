@@ -16,12 +16,6 @@
 
 package org.atinject.tck.auto;
 
-import org.atinject.tck.Tester;
-
 public interface Car {
 
-    /**
-     * Validates that this object was injected correctly.
-     */
-    void check(Tester tester);
 }
