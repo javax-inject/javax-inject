@@ -16,7 +16,6 @@
 
 package org.atinject.tck.auto;
 
-import org.atinject.tck.Tester;
 import org.atinject.tck.auto.accessories.SpareTire;
 
 import javax.inject.Inject;
@@ -29,10 +28,10 @@ public class V8Engine extends GasEngine {
     }
 
     @Inject void injectPackagePrivateMethod() {
-        if (packagePrivateMethodInjected) {
-            moreProblems.add("Overridden package private method injected twice");
+        if (subPackagePrivateMethodInjected) {
+            overriddenPackagePrivateMethodInjectedTwice = true;
         }
-        packagePrivateMethodInjected = true;
+        subPackagePrivateMethodInjected = true;
     }
 
     /**
@@ -44,12 +43,12 @@ public class V8Engine extends GasEngine {
                 || !(seatB instanceof DriversSeat)
                 || (tireA instanceof SpareTire)
                 || !(tireB instanceof SpareTire)) {
-            moreProblems.add("Qualifiers inherited from overridden methods");
+            qualifiersInheritedFromOverriddenMethod = true;
         }
     }
 
     void injectPackagePrivateMethodForOverride() {
-        packagePrivateMethodForOverrideInjected = true;
+        subPackagePrivateMethodForOverrideInjected = true;
     }
 
     @Inject public void injectTwiceOverriddenWithOmissionInMiddle() {
@@ -58,19 +57,5 @@ public class V8Engine extends GasEngine {
 
     public void injectTwiceOverriddenWithOmissionInSubclass() {
         overriddenTwiceWithOmissionInSubclassInjected = true;
-    }
-
-    public void check(Tester tester) {
-        tester.addProblems(moreProblems);
-
-        tester.test(publicNoArgsConstructorInjected, "Public no-args constructor not injected");
-        tester.test(packagePrivateMethodInjected, "Packge private method not injected");
-        tester.test(!packagePrivateMethodForOverrideInjected,
-                "Package private method injected, even though its override lacks @Inject");
-
-        tester.test(overriddenTwiceWithOmissionInMiddleInjected,
-                "Twice-overridden method not injected; middle override lacks @Inject");
-        tester.test(!overriddenTwiceWithOmissionInSubclassInjected,
-                "Twice-overridden method injected, even though its override lacks @Inject");
     }
 }
