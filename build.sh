@@ -25,6 +25,7 @@ cp -R src build
 cp -R tck build/tck-src
 find build/src -name .svn -type d | xargs rm -r
 find build/tck-src -name .svn -type d | xargs rm -r
+rm build/tck-src/tck.iml
 
 jar cfM build/dist/$NAME-src.zip -C build/src .
 jar cfM build/dist/$NAME-tck-src.zip -C build/tck-src .
