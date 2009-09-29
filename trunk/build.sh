@@ -19,6 +19,9 @@ License</a>, Version 2.0.</font>"
 # Generate Javadocs.
 javadoc -protected -bottom "$FOOTER" \
 	-sourcepath src -d build/javadoc javax.inject
+javadoc -classpath build/classes:lib/junit.jar -private -bottom "$FOOTER" \
+	-sourcepath tck -d build/tck-javadoc org.atinject.tck \
+	org.atinject.tck.auto org.atinject.tck.auto.accessories
 
 # Generate jars.
 cp -R src build
@@ -31,6 +34,7 @@ jar cfM build/dist/$NAME-src.zip -C build/src .
 jar cfM build/dist/$NAME-tck-src.zip -C build/tck-src .
 
 jar cfM build/dist/$NAME-javadoc.zip -C build/javadoc .
+jar cfM build/dist/$NAME-tck-javadoc.zip -C build/tck-javadoc .
 jar cfM build/dist/$NAME.jar -C build/classes .
 jar cfM build/dist/$NAME-tck.jar -C build/tck .
 
