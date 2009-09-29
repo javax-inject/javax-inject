@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
  * <pre>
  * public class MyTck {
  *   public static Test suite() {
- *     return Tck.testsFor(new MyInjector().getInstance(Car.class));
+ *     return Tck.testsFor(new MyInjector().getInstance(Car.class), true, true);
  *   }
  * }
  * </pre>
@@ -61,14 +61,20 @@ public class Tck {
      *       FuelTank}.
      * </ul>
      *
-     * <p>The static members of the following types shall also be injected: {@link org.atinject.tck.auto.Convertible
+     * <p>If static injection is supported, the static members of the following
+     * types shall also be injected: {@link org.atinject.tck.auto.Convertible
      * Convertible}, {@link org.atinject.tck.auto.Tire Tire}, and {@link
      * org.atinject.tck.auto.accessories.SpareTire SpareTire}.
+     *
+     * @param car to test
+     * @param supportsStatic if the injector supports static member injection
+     * @param supportsPrivate if the injector supports private member injection
      *
      * @throws NullPointerException if car is null
      * @throws ClassCastException if car doesn't extend Convertible
      */
-    public static Test testsFor(Car car) {
+    public static Test testsFor(Car car, boolean supportsStatic,
+            boolean supportsPrivate) {
         if (car == null) {
             throw new NullPointerException("car");
         }
@@ -77,11 +83,18 @@ public class Tck {
             throw new ClassCastException("car doesn't implement Convertible");
         }
 
-        Convertible.Tests.localConvertible.set((Convertible) car);
+        Convertible.localConvertible.set((Convertible) car);
         try {
-            return new TestSuite(Convertible.Tests.class);
+            TestSuite suite = new TestSuite(Convertible.Tests.class);
+            if (supportsStatic) {
+                suite.addTestSuite(Convertible.StaticTests.class);
+            }
+            if (supportsPrivate) {
+                suite.addTestSuite(Convertible.PrivateTests.class);
+            }
+            return suite;
         } finally {
-            Convertible.Tests.localConvertible.remove();
+            Convertible.localConvertible.remove();
         }
     }
 }
