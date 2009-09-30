@@ -32,7 +32,7 @@ import static java.lang.annotation.ElementType.FIELD;
  * in superclasses are injected before those in subclasses. Ordering of
  * injection among fields and among methods in the same class is not specified.
  * For a given type T and optional qualifier, an injector must
- * be able to inject a user-specified subclass of T that has an injectable
+ * be able to inject a user-specified subtype of T that has an injectable
  * constructor. Beyond that, which values are injected depend upon the
  * injector implementation and its configuration.
  *

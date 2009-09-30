@@ -25,4 +25,16 @@ public class RoundThing {
     @Inject void injectPackagePrivateMethod2() {
         packagePrivateMethod2Injected = true;
     }
+
+    public boolean packagePrivateMethod3Injected;
+
+    @Inject void injectPackagePrivateMethod3() {
+        packagePrivateMethod3Injected = true;
+    }
+
+    public boolean packagePrivateMethod4Injected;
+
+    @Inject void injectPackagePrivateMethod4() {
+        packagePrivateMethod4Injected = true;
+    }
 }
