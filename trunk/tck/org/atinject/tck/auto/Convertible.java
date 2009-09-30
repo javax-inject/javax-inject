@@ -19,6 +19,7 @@ package org.atinject.tck.auto;
 import junit.framework.TestCase;
 import org.atinject.tck.auto.accessories.Cupholder;
 import org.atinject.tck.auto.accessories.SpareTire;
+import org.atinject.tck.auto.accessories.RoundThing;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -177,6 +178,7 @@ public class Convertible implements Car {
         private final Convertible car = localConvertible.get();
         private final Cupholder cupholder = car.cupholder;
         private final SpareTire spareTire = car.spareTire;
+        private final Tire plainTire = car.fieldPlainTire;
         private final Engine engine = car.engineProvider.get();
 
         // smoke tests: if these fail all bets are off
@@ -426,6 +428,14 @@ public class Convertible implements Car {
             assertFalse(engine.overriddenTwiceWithOmissionInSubclassInjected);
         }
 
+        public void testOverriddingMixedWithPackagePrivate() {
+            assertTrue(spareTire.packagePrivateMethod2Injected);
+            assertTrue(((Tire) spareTire).packagePrivateMethod2Injected);
+            assertFalse(((RoundThing) spareTire).packagePrivateMethod2Injected);
+
+            assertTrue(plainTire.packagePrivateMethod2Injected);
+            assertTrue(((RoundThing) plainTire).packagePrivateMethod2Injected);
+        }
 
         // inject only once
 
