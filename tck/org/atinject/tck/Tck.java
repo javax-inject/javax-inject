@@ -23,61 +23,80 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Maufactures the compatibility test suite. Call {@link #testsFor testsFor}
- * from a JUnit static {@code suite} method:
+ * Manufactures the compatibility test suite. This TCK relies on
+ * <a href="http://junit.org/">JUnit</a>. To integrate the TCK with your
+ * injector, create a JUnit test suite class that passes an injected
+ * {@link Car Car} instance to {@link #testsFor testsFor(Car)}:
  *
  * <pre>
  * import junit.framework.Test;
  * import org.atinject.tck.Tck;
+ * import org.atinject.tck.auto.Car;
  *
  * public class MyTck {
  *   public static Test suite() {
  *     Car car = new MyInjector().getInstance(Car.class);
- *     return Tck.testsFor(car, true, true);
+ *     return Tck.testsFor(car,
+ *         true /* supportsStatic &#42;/,
+ *         true /* supportsPrivate &#42;/);
  *   }
- * }
- * </pre>
+ * }</pre>
  *
- * <p>Run the tests using JUnit. For example:
+ * <p>The static {@code suite} method that returns a {@code Test} is a JUnit
+ * convention. Feel free to run the returned tests in other ways. Configure the
+ * injector as follows:
+ *
+ * <ul>
+ *   <li>{@link org.atinject.tck.auto.Car} is implemented by
+ *       {@link org.atinject.tck.auto.Convertible Convertible}.
+ *   <li>{@link org.atinject.tck.auto.Drivers @Drivers}
+ *       {@link org.atinject.tck.auto.Seat Seat} is
+ *       implemented by {@link org.atinject.tck.auto.DriversSeat DriversSeat}.
+ *   <li>{@link org.atinject.tck.auto.Seat Seat} is
+ *       implemented by {@link org.atinject.tck.auto.Seat Seat} itself (not a
+ *       subclass).
+ *   <li>{@link org.atinject.tck.auto.Engine Engine} is implemented by
+ *       {@link org.atinject.tck.auto.V8Engine V8Engine}.
+ *   <li>{@link javax.inject.Named @Named("spare")}
+ *       {@link org.atinject.tck.auto.Tire Tire} is implemented by
+ *       {@link org.atinject.tck.auto.accessories.SpareTire SpareTire}.
+ *   <li>The following concrete classes may also be injected:
+ *       {@link org.atinject.tck.auto.accessories.Cupholder Cupholder},
+ *       {@link org.atinject.tck.auto.Tire Tire} and
+ *       {@link org.atinject.tck.auto.FuelTank FuelTank}.
+ * </ul>
+ *
+ * <p>Static and private member injection support is optional, but if your
+ * injector supports those features, it must pass those tests. If static member
+ * injection is supported, the static members of the following types shall
+ * also be injected once:
+ * {@link org.atinject.tck.auto.Convertible Convertible},
+ * {@link org.atinject.tck.auto.Tire Tire}, and
+ * {@link org.atinject.tck.auto.accessories.SpareTire SpareTire}.
+ *
+ * <p>Use your favorite JUnit tool to run the tests. For example, you can use
+ * your IDE or JUnit's command line runner:
  *
  * <pre>
- * java junit.textui.TestRunner MyTck
- * </pre>
+ * java -cp javax.inject-tck.jar:junit.jar:myinjector.jar \
+ *     junit.textui.TestRunner MyTck</pre>
  */
 public class Tck {
 
     private Tck() {}
 
     /**
-     * Constructs a test suite for the given {@link Car} instance. Create the
-     * {@code Car} instance using an injector with the following configuration:
-     *
-     * <ul>
-     *   <li>{@link org.atinject.tck.auto.Car} is implemented by
-     *       {@link org.atinject.tck.auto.Convertible Convertible}.
-     *   <li>{@link org.atinject.tck.auto.Drivers @Drivers} {@link org.atinject.tck.auto.Seat Seat} is
-     *       implemented by {@link org.atinject.tck.auto.DriversSeat DriversSeat}.
-     *   <li>{@link org.atinject.tck.auto.Engine Engine} is implemented by
-     *       {@link org.atinject.tck.auto.V8Engine V8Engine}.
-     *   <li>{@link javax.inject.Named @Named("spare")} {@link org.atinject.tck.auto.Tire Tire} is implemented by
-     *       {@link org.atinject.tck.auto.accessories.SpareTire SpareTire}.
-     *   <li>The following concrete classes may also be injected: {@link org.atinject.tck.auto.accessories.Cupholder
-     *       Cupholder}, {@link org.atinject.tck.auto.Tire Tire} and {@link org.atinject.tck.auto.FuelTank
-     *       FuelTank}.
-     * </ul>
-     *
-     * <p>If static member injection is supported, the static members of the
-     * following types shall also be injected:
-     * {@link org.atinject.tck.auto.Convertible Convertible},
-     * {@link org.atinject.tck.auto.Tire Tire}, and {@link
-     * org.atinject.tck.auto.accessories.SpareTire SpareTire}.
+     * Constructs a JUnit test suite for the given {@link Car} instance.
      *
      * @param car to test
-     * @param supportsStatic if the injector supports static member injection
-     * @param supportsPrivate if the injector supports private member injection
+     * @param supportsStatic true if the injector supports static member
+     *  injection
+     * @param supportsPrivate true if the injector supports private member
+     *  injection
      *
      * @throws NullPointerException if car is null
-     * @throws ClassCastException if car doesn't extend Convertible
+     * @throws ClassCastException if car doesn't extend
+     *  {@link Convertible Convertible}
      */
     public static Test testsFor(Car car, boolean supportsStatic,
             boolean supportsPrivate) {

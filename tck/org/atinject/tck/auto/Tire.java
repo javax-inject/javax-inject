@@ -17,12 +17,13 @@
 package org.atinject.tck.auto;
 
 import org.atinject.tck.auto.accessories.SpareTire;
+import org.atinject.tck.auto.accessories.RoundThing;
 
 import javax.inject.Inject;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Tire {
+public class Tire extends RoundThing {
 
     protected static final FuelTank NEVER_INJECTED = new FuelTank();
 
@@ -159,5 +160,11 @@ public class Tire {
 
     protected boolean hasSpareTireBeenMethodInjected() {
         return false;
+    }
+
+    boolean packagePrivateMethod2Injected;
+    
+    @Inject void injectPackagePrivateMethod2() {
+        packagePrivateMethod2Injected = true;
     }
 }

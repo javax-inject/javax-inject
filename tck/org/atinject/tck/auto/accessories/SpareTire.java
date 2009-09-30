@@ -107,4 +107,10 @@ public class SpareTire extends Tire {
     public static boolean hasBeenStaticMethodInjected() {
         return staticMethodInjection != NEVER_INJECTED;
     }
+
+    public boolean packagePrivateMethod2Injected;
+
+    @Inject void injectPackagePrivateMethod2() {
+        packagePrivateMethod2Injected = true;
+    }
 }
