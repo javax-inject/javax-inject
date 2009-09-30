@@ -60,8 +60,9 @@ import junit.framework.TestSuite;
  *   <li>{@link javax.inject.Named @Named("spare")}
  *       {@link org.atinject.tck.auto.Tire Tire} is implemented by
  *       {@link org.atinject.tck.auto.accessories.SpareTire SpareTire}.
- *   <li>The following concrete classes may also be injected:
+ *   <li>The following classes may also be injected:
  *       {@link org.atinject.tck.auto.accessories.Cupholder Cupholder},
+ *       {@link org.atinject.tck.auto.accessories.SpareTire SpareTire},
  *       {@link org.atinject.tck.auto.Tire Tire} and
  *       {@link org.atinject.tck.auto.FuelTank FuelTank}.
  * </ul>
