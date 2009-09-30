@@ -26,8 +26,8 @@ import javax.inject.Provider;
 
 public class Convertible implements Car {
 
-    @Inject DriversSeat driversSeatA;
-    @Inject DriversSeat driversSeatB;
+    @Inject @Drivers Seat driversSeatA;
+    @Inject @Drivers Seat driversSeatB;
     @Inject SpareTire spareTire;
     @Inject Cupholder cupholder;
     @Inject Provider<Engine> engineProvider;
