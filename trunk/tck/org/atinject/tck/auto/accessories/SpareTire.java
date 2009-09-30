@@ -113,4 +113,10 @@ public class SpareTire extends Tire {
     @Inject void injectPackagePrivateMethod2() {
         packagePrivateMethod2Injected = true;
     }
+
+    public boolean packagePrivateMethod3Injected;
+
+    void injectPackagePrivateMethod3() {
+        packagePrivateMethod3Injected = true;
+    }
 }

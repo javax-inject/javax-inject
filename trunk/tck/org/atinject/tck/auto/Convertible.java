@@ -428,13 +428,27 @@ public class Convertible implements Car {
             assertFalse(engine.overriddenTwiceWithOmissionInSubclassInjected);
         }
 
-        public void testOverriddingMixedWithPackagePrivate() {
+        public void testOverriddingMixedWithPackagePrivate2() {
             assertTrue(spareTire.packagePrivateMethod2Injected);
             assertTrue(((Tire) spareTire).packagePrivateMethod2Injected);
             assertFalse(((RoundThing) spareTire).packagePrivateMethod2Injected);
 
             assertTrue(plainTire.packagePrivateMethod2Injected);
             assertTrue(((RoundThing) plainTire).packagePrivateMethod2Injected);
+        }
+
+        public void testOverriddingMixedWithPackagePrivate3() {
+            assertFalse(spareTire.packagePrivateMethod3Injected);
+            assertTrue(((Tire) spareTire).packagePrivateMethod3Injected);
+            assertFalse(((RoundThing) spareTire).packagePrivateMethod3Injected);
+
+            assertTrue(plainTire.packagePrivateMethod3Injected);
+            assertTrue(((RoundThing) plainTire).packagePrivateMethod3Injected);
+        }
+
+        public void testOverriddingMixedWithPackagePrivate4() {
+            assertFalse(plainTire.packagePrivateMethod4Injected);
+            assertTrue(((RoundThing) plainTire).packagePrivateMethod4Injected);
         }
 
         // inject only once

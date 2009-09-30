@@ -163,8 +163,20 @@ public class Tire extends RoundThing {
     }
 
     boolean packagePrivateMethod2Injected;
-    
+
     @Inject void injectPackagePrivateMethod2() {
         packagePrivateMethod2Injected = true;
+    }
+
+    public boolean packagePrivateMethod3Injected;
+
+    @Inject void injectPackagePrivateMethod3() {
+        packagePrivateMethod3Injected = true;
+    }
+
+    public boolean packagePrivateMethod4Injected;
+
+    void injectPackagePrivateMethod4() {
+        packagePrivateMethod4Injected = true;
     }
 }
