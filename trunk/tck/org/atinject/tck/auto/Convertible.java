@@ -385,11 +385,11 @@ public class Convertible implements Car {
             assertFalse(spareTire.methodInjectedBeforeFields);
         }
 
-        public void testSupertypeFieldsInjectedBeforeSubtypeMethods() {
+        public void testSupertypeMethodsInjectedBeforeSubtypeFields() {
             assertFalse(spareTire.subtypeFieldInjectedBeforeSupertypeMethods);
         }
 
-        public void testSupertypeMethodsInjectedBeforeSubtypeMethods() {
+        public void testSupertypeMethodInjectedBeforeSubtypeMethods() {
             assertFalse(spareTire.subtypeMethodInjectedBeforeSupertypeMethods);
         }
 
