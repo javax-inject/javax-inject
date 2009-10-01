@@ -29,7 +29,7 @@ public class Convertible implements Car {
 
     @Inject @Drivers Seat driversSeatA;
     @Inject @Drivers Seat driversSeatB;
-    @Inject @Named("spare") Tire spareTire;
+    @Inject SpareTire spareTire;
     @Inject Cupholder cupholder;
     @Inject Provider<Engine> engineProvider;
 
@@ -177,7 +177,7 @@ public class Convertible implements Car {
 
         private final Convertible car = localConvertible.get();
         private final Cupholder cupholder = car.cupholder;
-        private final Tire spareTire = car.spareTire;
+        private final SpareTire spareTire = car.spareTire;
         private final Tire plainTire = car.fieldPlainTire;
         private final Engine engine = car.engineProvider.get();
 
@@ -429,7 +429,7 @@ public class Convertible implements Car {
         }
 
         public void testOverriddingMixedWithPackagePrivate2() {
-            assertTrue(((SpareTire) spareTire).packagePrivateMethod2Injected);
+            assertTrue(spareTire.packagePrivateMethod2Injected);
             assertTrue(((Tire) spareTire).packagePrivateMethod2Injected);
             assertFalse(((RoundThing) spareTire).packagePrivateMethod2Injected);
 
@@ -438,7 +438,7 @@ public class Convertible implements Car {
         }
 
         public void testOverriddingMixedWithPackagePrivate3() {
-            assertFalse(((SpareTire) spareTire).packagePrivateMethod3Injected);
+            assertFalse(spareTire.packagePrivateMethod3Injected);
             assertTrue(((Tire) spareTire).packagePrivateMethod3Injected);
             assertFalse(((RoundThing) spareTire).packagePrivateMethod3Injected);
 
@@ -550,7 +550,7 @@ public class Convertible implements Car {
 
         private final Convertible car = localConvertible.get();
         private final Engine engine = car.engineProvider.get();
-        private final Tire spareTire = car.spareTire;
+        private final SpareTire spareTire = car.spareTire;
 
         public void testSupertypePrivateMethodInjected() {
             assertTrue(spareTire.superPrivateMethodInjected);
