@@ -223,7 +223,7 @@
   </component>
   <component name="ProjectFileVersion" converted="true" />
   <component name="ProjectKey">
-    <option name="state" value="project:///Users/crazybob/projects/atinject/atinject.ipr" />
+    <option name="state" value="https://atinject.googlecode.com/svn/trunk/atinject.ipr" />
   </component>
   <component name="ProjectModuleManager">
     <modules>
@@ -251,6 +251,9 @@
   <component name="SvnBranchConfigurationManager">
     <option name="myVersion" value="124" />
     <option name="mySupportsUserInfoFilter" value="true" />
+  </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="svn" />
   </component>
   <component name="libraryTable">
     <library name="Guice">

@@ -31,10 +31,6 @@ import static java.lang.annotation.ElementType.FIELD;
  * injected first, followed by fields, and then methods. Fields and methods
  * in superclasses are injected before those in subclasses. Ordering of
  * injection among fields and among methods in the same class is not specified.
- * For a given type T and optional qualifier, an injector must
- * be able to inject a user-specified subtype of T that has an injectable
- * constructor. Beyond that, which values are injected depend upon the
- * injector implementation and its configuration.
  *
  * <p>Injectable constructors are annotated with {@code @Inject} and accept
  * zero or more dependencies as arguments. {@code @Inject} can apply to at most
@@ -89,7 +85,7 @@ import static java.lang.annotation.ElementType.FIELD;
  * non-{@code void} return types are allowed to support use of the method in
  * other contexts (builder-style method chaining, for example).
  *
- * <p>For example:
+ * <p>Examples:
  *
  * <pre>
  *   public class Car {
@@ -114,6 +110,17 @@ import static java.lang.annotation.ElementType.FIELD;
  * <tt>private</tt>), platform or injector limitations (like security
  * restrictions or lack of reflection support) might preclude injection
  * of non-public members.
+ *
+ * <p>For a given type T and optional qualifier, an injector must be able to
+ * inject a user-specified class that:
+ *
+ * <ol type="a">
+ *   <li>is assignment compatible with T and</li>
+ *   <li>has an injectable constructor.</li>
+ * </ol>
+ *
+ * <p>Beyond that, which values are injected depend upon the injector
+ * implementation and its configuration.
  *
  * <h3>Qualifiers</h3>
  *
