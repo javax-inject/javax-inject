@@ -43,8 +43,9 @@ import junit.framework.TestSuite;
  * }</pre>
  *
  * <p>The static {@code suite} method that returns a {@code Test} is a JUnit
- * convention. Feel free to run the returned tests in other ways. Configure the
- * injector as follows:
+ * convention. Feel free to run the returned tests in other ways.
+ *
+ * <p>Configure the injector as follows:
  *
  * <ul>
  *   <li>{@link org.atinject.tck.auto.Car} is implemented by
@@ -53,24 +54,25 @@ import junit.framework.TestSuite;
  *       {@link org.atinject.tck.auto.Seat Seat} is
  *       implemented by {@link org.atinject.tck.auto.DriversSeat DriversSeat}.
  *   <li>{@link org.atinject.tck.auto.Seat Seat} is
- *       implemented by {@link org.atinject.tck.auto.Seat Seat} itself (not a
- *       subclass).
+ *       implemented by {@link org.atinject.tck.auto.Seat Seat} itself, and
+ *       {@link org.atinject.tck.auto.Tire Tire} by
+ *       {@link org.atinject.tck.auto.Tire Tire} itself
+ *       (not subclasses).
  *   <li>{@link org.atinject.tck.auto.Engine Engine} is implemented by
  *       {@link org.atinject.tck.auto.V8Engine V8Engine}.
  *   <li>{@link javax.inject.Named @Named("spare")}
  *       {@link org.atinject.tck.auto.Tire Tire} is implemented by
  *       {@link org.atinject.tck.auto.accessories.SpareTire SpareTire}.
- *   <li>The following classes may also be injected:
+ *   <li>The following classes may also be injected directly:
  *       {@link org.atinject.tck.auto.accessories.Cupholder Cupholder},
- *       {@link org.atinject.tck.auto.accessories.SpareTire SpareTire},
- *       {@link org.atinject.tck.auto.Tire Tire} and
+ *       {@link org.atinject.tck.auto.accessories.SpareTire SpareTire}, and
  *       {@link org.atinject.tck.auto.FuelTank FuelTank}.
  * </ul>
  *
  * <p>Static and private member injection support is optional, but if your
- * injector supports those features, it must pass those tests. If static member
- * injection is supported, the static members of the following types shall
- * also be injected once:
+ * injector supports those features, it must pass the respective tests. If
+ * static member injection is supported, the static members of the following
+ * types shall also be injected once:
  * {@link org.atinject.tck.auto.Convertible Convertible},
  * {@link org.atinject.tck.auto.Tire Tire}, and
  * {@link org.atinject.tck.auto.accessories.SpareTire SpareTire}.
