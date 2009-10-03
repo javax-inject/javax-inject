@@ -111,17 +111,6 @@ import static java.lang.annotation.ElementType.FIELD;
  * restrictions or lack of reflection support) might preclude injection
  * of non-public members.
  *
- * <p>For a given type T and optional qualifier, an injector must be able to
- * inject a user-specified class that:
- *
- * <ol type="a">
- *   <li>is assignment compatible with T and</li>
- *   <li>has an injectable constructor.</li>
- * </ol>
- *
- * <p>Beyond that, which values are injected depend upon the injector
- * implementation and its configuration.
- *
  * <h3>Qualifiers</h3>
  *
  * <p>A {@linkplain Qualifier qualifier} may annotate an injectable field
@@ -141,6 +130,19 @@ import static java.lang.annotation.ElementType.FIELD;
  * <p>If one injectable method overrides another, the overriding method's
  * parameters do not automatically inherit qualifiers from the overridden
  * method's parameters.
+ *
+ * <h3>Injectable Values</h3>
+ *
+ * <p>For a given type T and optional qualifier, an injector must be able to
+ * inject a user-specified class that:
+ *
+ * <ol type="a">
+ *   <li>is assignment compatible with T and</li>
+ *   <li>has an injectable constructor.</li>
+ * </ol>
+ *
+ * <p>Beyond that, which values are injected depend upon the injector
+ * implementation and its configuration.
  *
  * <h3>Circular Dependencies</h3>
  *
