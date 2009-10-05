@@ -141,8 +141,8 @@ import static java.lang.annotation.ElementType.FIELD;
  *   <li>has an injectable constructor.</li>
  * </ol>
  *
- * <p>For example, the user might use external configuration to choose an
- * implementation. Beyond that, which values are injected depend upon the
+ * <p>For example, the user might use external configuration to pick an
+ * implementation of T. Beyond that, which values are injected depend upon the
  * injector implementation and its configuration.
  *
  * <h3>Circular Dependencies</h3>
