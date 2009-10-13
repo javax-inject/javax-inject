@@ -21,6 +21,7 @@ License</a>, Version 2.0.</font>"
 
 # Generate Javadocs.
 javadoc -protected -bottom "$FOOTER" \
+    -header "<font color='red'><b>This is a DRAFT specification.</b></font>" \
 	-sourcepath src -d build/javadoc javax.inject
 javadoc -classpath build/classes:lib/junit.jar -protected -bottom "$FOOTER" \
 	-sourcepath tck -d build/tck/javadoc org.atinject.tck \
