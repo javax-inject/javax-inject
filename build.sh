@@ -1,5 +1,5 @@
 NAME=javax.inject
-VERSION=1
+VERSION=SNAPSHOT
 
 # Clear and recreate build directory.
 rm -r build
