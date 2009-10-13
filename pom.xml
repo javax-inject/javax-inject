@@ -1,40 +1,20 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>javax.inject</groupId>
-    <artifactId>javax.inject</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
-    <name>Javax Inject from the JSR-330 Expert Group</name>
-
-    <build>
-        <sourceDirectory>src</sourceDirectory>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-	<reporting>
-	    <plugins>
-	        <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-javadoc-plugin</artifactId>
-	            <version>2.5</version>
-	            <configuration>
-	                <bottom><![CDATA[<font size='-1'>Copyright (C) 2009 <a href='http://code.google.com/p/atinject/'>\
-					The JSR-330 Expert Group</a>. \
-					Licensed under the <a href='http://www.apache.org/licenses/LICENSE-2.0'>Apache \
-					License</a>, Version 2.0.</font>]]></bottom>
-                </configuration>
-	        </plugin>
-	    </plugins>
-	</reporting>
-
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>javax.inject</groupId>
+  <artifactId>javax.inject</artifactId>
+  <packaging>jar</packaging>
+  <name>javax.inject</name>
+  <version>1</version>
+  <description>The javax.inject API</description>
+  <url>http://code.google.com/p/atinject/</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>http://code.google.com/p/atinject/source/checkout</url>
+  </scm>
 </project>
