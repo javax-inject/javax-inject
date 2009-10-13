@@ -1,4 +1,5 @@
 NAME=javax.inject
+VERSION=1
 
 # Clear and recreate build directory.
 rm -r build
@@ -47,3 +48,11 @@ jar cfM build/tck/dist/$NAME-tck.jar -C build/tck/classes .
 
 jar cfM build/$NAME.zip -C build/dist .
 jar cfM build/$NAME-tck.zip -C build/tck/dist .
+
+# Build Maven bundle.
+mkdir build/maven
+cp build/dist/$NAME.jar build/maven/$NAME-$VERSION.jar
+cp build/dist/$NAME-src.zip build/maven/$NAME-$VERSION-sources.jar
+cp build/dist/$NAME-javadoc.zip build/maven/$NAME-$VERSION-javadoc.jar
+cp pom.xml build/maven
+jar cfM build/$NAME-$VERSION-bundle.jar -C build/maven .
