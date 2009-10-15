@@ -1,3 +1,4 @@
 The following injectors have passed the [http://code.google.com/p/atinject/downloads/list TCK]:
 
   * [http://code.google.com/p/google-guice/ Google Guice 2.1]
+  * [http://www.seamframework.org/Weld Weld 1.0.0]
