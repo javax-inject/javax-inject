@@ -91,8 +91,8 @@
  *
  * <pre>   class Stopwatch {
  *     final TimeSource timeSource;
- *     <b>@Inject Stopwatch(TimeSource TimeSource)</b> {
- *       this.TimeSource = TimeSource;
+ *     <b>@Inject Stopwatch(TimeSource timeSource)</b> {
+ *       this.timeSource = timeSource;
  *     }
  *     void start() { ... }
  *     long stop() { ... }
