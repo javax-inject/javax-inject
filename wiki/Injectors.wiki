@@ -1,4 +1,5 @@
 The following injectors have passed the [http://code.google.com/p/atinject/downloads/list TCK]:
 
   * [http://code.google.com/p/google-guice/ Google Guice 2.1]
+  * [http://openwebbeans.apache.org/1.0.0-SNAPSHOT/jsr330.html OpenWebBeans]
   * [http://www.seamframework.org/Weld Weld 1.0.0]
