@@ -15,6 +15,7 @@
     </license>
   </licenses>
   <scm>
+	<connection>scm:svn:http://atinject.googlecode.com/svn/trunk</connection>
     <url>http://code.google.com/p/atinject/source/checkout</url>
   </scm>
 </project>
