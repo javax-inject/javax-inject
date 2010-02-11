@@ -2,4 +2,5 @@ The following injectors have passed the [http://code.google.com/p/atinject/downl
 
   * [http://code.google.com/p/google-guice/ Google Guice 2.1]
   * [http://openwebbeans.apache.org/1.0.0-SNAPSHOT/jsr330.html OpenWebBeans]
+  * [http://www.springsource.com/download/community Spring Framework 3.0]
   * [http://www.seamframework.org/Weld Weld 1.0.0]
