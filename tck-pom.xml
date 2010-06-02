@@ -23,7 +23,7 @@
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>javax.inject</artifactId>
-            <version>${pom.version}</version>
+            <version>1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
