@@ -4,7 +4,7 @@
     <artifactId>javax.inject-tck</artifactId>
     <packaging>jar</packaging>
     <name>javax.inject-tck</name>
-    <version>1</version>
+    <version>1-SNAPSHOT</version>
     <description>The javax.inject API - TCK</description>
     <url>http://code.google.com/p/atinject/</url>
     <licenses>
