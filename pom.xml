@@ -19,7 +19,26 @@
         <developerConnection>scm:svn:https://atinject.googlecode.com/svn/trunk</developerConnection>
         <url>http://code.google.com/p/atinject/source/checkout</url>
     </scm>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
+		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>tck</testSourceDirectory>
+		<testResources>
+			<testResource>
+				<directory>tck</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</testResource>
+		</testResources>
         <pluginManagement>
             <plugins>
                 <plugin>
