@@ -1,11 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project>
     <modelVersion>4.0.0</modelVersion>
     <groupId>javax.inject</groupId>
-    <artifactId>javax.inject-tck</artifactId>
+  <artifactId>javax.inject</artifactId>
     <packaging>jar</packaging>
-    <name>javax.inject-tck</name>
-    <version>1.1-SNAPSHOT</version>
-    <description>The javax.inject API - TCK</description>
+  <name>javax.inject</name>
+  <version>1</version>
+  <description>The javax.inject API</description>
     <url>http://code.google.com/p/atinject/</url>
     <licenses>
         <license>
@@ -19,29 +19,7 @@
         <developerConnection>scm:svn:https://atinject.googlecode.com/svn/trunk</developerConnection>
         <url>http://code.google.com/p/atinject/source/checkout</url>
     </scm>
-    <dependencies>
-        <dependency>
-            <groupId>${pom.groupId}</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>1</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.7</version>
-        </dependency>
-    </dependencies>
     <build>
-        <sourceDirectory>tck</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>tck</directory>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                    <exclude>tck.iml</exclude>
-                </excludes>
-            </resource>
-        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>
