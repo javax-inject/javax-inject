@@ -12,6 +12,16 @@ To follow the progress of the expert group, messages from the expert group
 mailing list are forwarded to an [observer mailing list] which anyone can
 join.
 
+# Implementations
+
+The following dependency injection systems have passed the [TCK][release]:
+
+  * [Google Guice 2.1](http://github.com/google/guice)
+  * [KouInject](http://kouinject.googlecode.com/)
+  * [OpenWebBeans](http://openwebbeans.apache.org/1.0.0-SNAPSHOT/jsr330.html)
+  * [Spring Framework 3.0](http://www.springsource.com/download/community)
+  * [Weld 1.0.0](http://www.seamframework.org/Weld)
+
 # License
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,3 +62,4 @@ limitations under the License.
 [spec]: http://atinject.googlecode.com/svn/trunk/javadoc/javax/inject/package-summary.html
 [observer mailing list]: http://groups.google.com/group/atinject-observer
 [javadoc]: http://javax-inject.github.io/javax-inject/api/index.html
+[release]: https://github.com/javax-inject/javax-inject/releases/tag/1
