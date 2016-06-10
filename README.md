@@ -59,7 +59,7 @@ limitations under the License.
 
 > Note: The above list was pulled from the google-code site as-is
 
-[spec]: http://atinject.googlecode.com/svn/trunk/javadoc/javax/inject/package-summary.html
+[spec]: http://javax-inject.github.io/javax-inject/api/javax/inject/package-summary.html
 [observer mailing list]: http://groups.google.com/group/atinject-observer
 [javadoc]: http://javax-inject.github.io/javax-inject/api/index.html
 [release]: https://github.com/javax-inject/javax-inject/releases/tag/1
