@@ -5,6 +5,9 @@ JSR-330: Dependency Injection for Java.
 October 13th, 2009. You can view the raw materials of the specification
 at any time in source control.
 
+You can also view the [javadoc for the spec classes][javadoc] here.
+
+
 To follow the progress of the expert group, messages from the expert group
 mailing list are forwarded to an [observer mailing list] which anyone can
 join.
@@ -48,3 +51,4 @@ limitations under the License.
 
 [spec]: http://atinject.googlecode.com/svn/trunk/javadoc/javax/inject/package-summary.html
 [observer mailing list]: http://groups.google.com/group/atinject-observer
+[javadoc]: http://javax-inject.github.io/javax-inject/api/index.html
