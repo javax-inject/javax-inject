@@ -25,24 +25,26 @@ limitations under the License.
 
 # Project Members
 
-| Googlecode User Info         | Project Role | Spec Role | Notes           | 
-| ---------------------------- | ------------ | --------- | --------------- |
-| crazybob...@gmail.com        | Owner        | Lead      | Google          |
-| johnsonr...@gmail.com        | Owner        | Lead      | SpringSource    |
-| limpbizkit                   | Committer    | EG Member | Google          |
-| gavin.k...@gmail.com         | Committer    | EG Member | RedHat          |
-| Larry.Ca...@gmail.com        | Committer    | EG Member | Oracle          |
-| t...@peierls.net             | Committer    | EG Member |                 |
-| ja...@maven.org              | Committer    | EG Member | Maven           |
-| PaulHamm...@gmail.com        | Committer    | EG Member | PicoContainer   |
-| juergen....@springsource.com | Committer    | EG Member | SpringSource    |
-| james.st...@gmail.com        | Committer    | EG Member |                 |
-| roberto....@sun.com          | Committer    | EG Member | Sun             |
-| hls...@gmail.com             | Committer    | EG Member | Tapestry        |
-| rickardo...@gmail.com        | Committer    | EG Member | Qi4j            |
-| d...@cs.oswego.edu           | Committer    | EG Member |                 |
-| abuck...@gmail.com           | Committer    | EG Member | Sun             |
-| bokowski                     | Committer    | EG Member | IBM             |
+| Googlecode User Info           | Project Role | Spec Role | Notes           | 
+| ------------------------------ | ------------ | --------- | --------------- |
+| `crazybob...@gmail.com`        | Owner        | Lead      | Google          |
+| `johnsonr...@gmail.com`        | Owner        | Lead      | SpringSource    |
+| `limpbizkit`                   | Committer    | EG Member | Google          |
+| `gavin.k...@gmail.com`         | Committer    | EG Member | RedHat          |
+| `Larry.Ca...@gmail.com`        | Committer    | EG Member | Oracle          |
+| `t...@peierls.net`             | Committer    | EG Member |                 |
+| `ja...@maven.org`              | Committer    | EG Member | Maven           |
+| `PaulHamm...@gmail.com`        | Committer    | EG Member | PicoContainer   |
+| `juergen....@springsource.com` | Committer    | EG Member | SpringSource    |
+| `james.st...@gmail.com`        | Committer    | EG Member |                 |
+| `roberto....@sun.com`          | Committer    | EG Member | Sun             |
+| `hls...@gmail.com`             | Committer    | EG Member | Tapestry        |
+| `rickardo...@gmail.com`        | Committer    | EG Member | Qi4j            |
+| `d...@cs.oswego.edu`           | Committer    | EG Member |                 |
+| `abuck...@gmail.com`           | Committer    | EG Member | Sun             |
+| `bokowski`                     | Committer    | EG Member | IBM             |
+
+> Note: The above list was pulled from the google-code site as-is
 
 [spec]: http://atinject.googlecode.com/svn/trunk/javadoc/javax/inject/package-summary.html
 [observer mailing list]: http://groups.google.com/group/atinject-observer
