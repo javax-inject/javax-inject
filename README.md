@@ -12,7 +12,7 @@ To follow the progress of the expert group, messages from the expert group
 mailing list are forwarded to an [observer mailing list] which anyone can
 join.
 
-# Implementations
+## Implementations
 
 The following dependency injection systems have passed the [TCK][release]:
 
@@ -22,7 +22,7 @@ The following dependency injection systems have passed the [TCK][release]:
   * [Spring Framework 3.0](http://www.springsource.com/download/community)
   * [Weld 1.0.0](http://www.seamframework.org/Weld)
 
-# License
+## License
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-# Project Members
+## Project Members
 
 | Googlecode User Info           | Project Role | Spec Role | Notes           | 
 | ------------------------------ | ------------ | --------- | --------------- |
