@@ -21,6 +21,7 @@ The following dependency injection systems have passed the [TCK][release]:
   * [OpenWebBeans](http://openwebbeans.apache.org/1.0.0-SNAPSHOT/jsr330.html)
   * [Spring Framework 3.0](http://www.springsource.com/download/community)
   * [Weld 1.0.0](http://www.seamframework.org/Weld)
+  * [Transfuse](http://androidtransfuse.org/)
 
 ## License
 
