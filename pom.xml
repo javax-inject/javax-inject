@@ -1,11 +1,15 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>javax.inject</groupId>
-  <artifactId>javax.inject</artifactId>
+    <parent>
+        <groupId>com.jwebmp.thirdparty</groupId>
+        <artifactId>third-party-modules</artifactId>
+        <version>0.0.0_0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>javax.inject</artifactId>
     <packaging>jar</packaging>
-  <name>javax.inject</name>
-  <version>1</version>
-  <description>The javax.inject API</description>
+    <name>javax.inject</name>
+    <description>The javax.inject API</description>
     <url>http://code.google.com/p/atinject/</url>
     <licenses>
         <license>
@@ -23,34 +27,30 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.7</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>tck</testSourceDirectory>
-		<testResources>
-			<testResource>
-				<directory>tck</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</testResource>
-		</testResources>
+        <sourceDirectory>src</sourceDirectory>
+        <testSourceDirectory>tck</testSourceDirectory>
+        <testResources>
+            <testResource>
+                <directory>tck</directory>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                </excludes>
+            </testResource>
+        </testResources>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.1</version>
                     <configuration>
-                        <source>1.5</source>
-                        <target>1.5</target>
                         <encoding>UTF-8</encoding>
-                        <optimize>false</optimize>
-                        <debug>true</debug>
+                        <optimize>true</optimize>
+                        <debug>false</debug>
                         <showDeprecation>true</showDeprecation>
                     </configuration>
                 </plugin>
@@ -60,7 +60,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.0</version>
                 <configuration>
                     <mavenExecutorId>forked-path</mavenExecutorId>
                 </configuration>
@@ -111,31 +110,91 @@
 
     <profiles>
         <profile>
-            <id>release-sign-artifacts</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
+            <id>jdk8</id>
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.0</version>
+                        <groupId>org.moditect</groupId>
+                        <artifactId>moditect-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
+                                <id>add-module-infos</id>
+                                <phase>package</phase>
                                 <goals>
-                                    <goal>sign</goal>
+                                    <goal>add-module-info</goal>
                                 </goals>
+                                <configuration>
+                                    <overwriteExistingFiles>true</overwriteExistingFiles>
+                                    <module>
+                                        <moduleInfoFile>
+                                            moditect/module-info.java
+                                        </moduleInfoFile>
+                                    </module>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
+
+        <profile>
+            <id>jdk11</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>add-source</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>src</source>
+                                        <!--<source>src/jre10/java</source>-->
+                                        <source>moditect</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>jdk12</id>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>add-source</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>src</source>
+                                        <!--<source>src/jre10/java</source>-->
+                                        <source>moditect</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 </project>
