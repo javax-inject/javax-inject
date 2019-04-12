@@ -9,6 +9,8 @@
     <artifactId>javax.inject</artifactId>
     <packaging>jar</packaging>
     <name>javax.inject</name>
+
+
     <description>The javax.inject API</description>
     <url>http://code.google.com/p/atinject/</url>
     <licenses>
@@ -63,48 +65,6 @@
                 <configuration>
                     <mavenExecutorId>forked-path</mavenExecutorId>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.moditect</groupId>
-                <artifactId>moditect-maven-plugin</artifactId>
-                <version>1.0.0.Beta1</version>
-                <executions>
-                    <execution>
-                        <id>add-module-infos</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>add-module-info</goal>
-                        </goals>
-                        <configuration>
-                            <overwriteExistingFiles>true</overwriteExistingFiles>
-                            <module>
-                                <moduleInfoFile>
-                                    moditect/module-info.java
-                                </moduleInfoFile>
-                            </module>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>src/main/java</source>
-                                <!--<source>src/jre10/java</source>-->
-                                <source> moditect</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
