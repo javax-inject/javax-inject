@@ -25,10 +25,6 @@
         <developerConnection>scm:svn:https://atinject.googlecode.com/svn/trunk</developerConnection>
         <url>http://code.google.com/p/atinject/source/checkout</url>
     </scm>
-    <dependencies>
-
-    </dependencies>
-
 
     <developers>
         <developer>
@@ -42,4 +38,8 @@
             <timezone>-8</timezone>
         </developer>
     </developers>
+
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+    </build>
 </project>
