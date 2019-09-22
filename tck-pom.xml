@@ -23,13 +23,13 @@
         <dependency>
             <groupId>${pom.groupId}</groupId>
             <artifactId>javax.inject</artifactId>
-            <version>1</version>
-        </dependency>
+            <version>1</version><type>jar</type>
+            </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.7</version>
-        </dependency>
+            <version>4.7</version><type>jar</type>
+            </dependency>
     </dependencies>
     <build>
         <sourceDirectory>tck</sourceDirectory>
