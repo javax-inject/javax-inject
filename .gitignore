@@ -1,6 +1,9 @@
 /build/
 /dist/
 Thumbs.db
+nbproject/build-native.xml~
+javadoc.zip
+persistence.xml
 /javadoc/
 /.jacocoverage/
 /build
@@ -10,9 +13,12 @@ Thumbs.db
 **.jacocoverage/
 **/*.iml
 *.iml
-**/*.tloh
-**/*.tlog
-**/*.db
+*.versionsBackup
+*.log
+*.tlog
+/.idea/
+*.project
 **/*.project
-**/*.factorypath
 **/*.classpath
+**/.settings
+/.settings
