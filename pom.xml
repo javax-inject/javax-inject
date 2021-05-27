@@ -6,7 +6,10 @@
   <name>javax.inject</name>
   <version>1</version>
   <description>The javax.inject API</description>
-    <url>http://code.google.com/p/atinject/</url>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <url>https://github.com/javax-inject/javax-inject</url>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -15,9 +18,9 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:svn:http://atinject.googlecode.com/svn/trunk</connection>
-        <developerConnection>scm:svn:https://atinject.googlecode.com/svn/trunk</developerConnection>
-        <url>http://code.google.com/p/atinject/source/checkout</url>
+        <connection>scm:git:https://github.com/javax-inject/javax-inject</connection>
+        <developerConnection>scm:git:https://github.com/javax-inject/javax-inject</developerConnection>
+        <url>https://github.com/javax-inject/javax-inject</url>
     </scm>
     <dependencies>
         <dependency>
@@ -44,10 +47,10 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.1</version>
+                    <version>3.8.1</version>
                     <configuration>
-                        <source>1.5</source>
-                        <target>1.5</target>
+                        <source>11</source>
+                        <target>11</target>
                         <encoding>UTF-8</encoding>
                         <optimize>false</optimize>
                         <debug>true</debug>
